@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">دانیال کالا</string>
+    <string name="errorConnectionSnackBar">مشکلی در اتصال به سرور پیش آمده است لطفا ارتباط خود را برسی کنید</string>
+    <string name="tryAgain">تلاش دوباره</string>
+</resources>

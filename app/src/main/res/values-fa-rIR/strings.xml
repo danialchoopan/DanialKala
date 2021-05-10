@@ -3,4 +3,7 @@
     <string name="app_name">دانیال کالا</string>
     <string name="errorConnectionSnackBar">مشکلی در اتصال به سرور پیش آمده است لطفا ارتباط خود را برسی کنید</string>
     <string name="tryAgain">تلاش دوباره</string>
+    <string name="category">دسته بندی</string>
+    <string name="more_product">محصولات بیشتر</string>
+    <string name="new_product">محصولات جدید</string>
 </resources>

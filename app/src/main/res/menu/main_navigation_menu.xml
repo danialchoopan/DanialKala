@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group1">
+        <item
+            android:id="@+id/navigation_menu_item_home"
+            android:icon="@drawable/ic_baseline_home_24"
+            android:title="خانه" />
+        <item
+            android:id="@+id/navigation_menu_item_list_categories"
+            android:icon="@drawable/ic_baseline_category_24"
+            android:title="لیست دسته بندی محصولات" />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group2">
+        <item
+            android:id="@+id/navigation_menu_item_shopping_cart"
+            android:icon="@drawable/ic_baseline_shopping_cart_24"
+            android:title="سبد خرید" />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group3">
+        <item
+            android:id="@+id/navigation_menu_item_special_offer"
+            android:icon="@drawable/ic_baseline_star_24"
+            android:title="بیشنهاد ویژه" />
+        <item
+            android:id="@+id/navigation_menu_item_best_sellers"
+            android:icon="@drawable/ic_baseline_star_24"
+            android:title="پرفروش ترین ها" />
+        <item
+            android:id="@+id/navigation_menu_item_most_viewed"
+            android:icon="@drawable/ic_baseline_star_24"
+            android:title="پربازدید ترین ها" />
+        <item
+            android:id="@+id/navigation_menu_item_newest_product"
+            android:icon="@drawable/ic_baseline_star_24"
+            android:title="جدید ترین ها" />
+    </group>
+
+    <group android:checkableBehavior="single"
+        android:id="@+id/group4">
+        <item
+            android:id="@+id/navigation_menu_item_setting"
+            android:icon="@drawable/ic_baseline_settings_24"
+            android:title="تنظیمات" />
+        <item
+            android:id="@+id/navigation_menu_item_qustions"
+            android:icon="@drawable/ic_baseline_help_24"
+            android:title="سوالات متداول" />
+        <item
+            android:id="@+id/navigation_menu_item_about_us"
+            android:icon="@drawable/ic_baseline_supervisor_account_24"
+            android:title="درباره ما" />
+    </group>
+</menu>

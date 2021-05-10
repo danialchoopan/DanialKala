@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/row_imgProduct"
+            android:layout_width="150dp"
+            android:layout_height="150dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:srcCompat="@drawable/img_loader" />
+
+        <TextView
+            android:id="@+id/row_lblProductName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:fontFamily="@font/vazir"
+            android:text="محصول"
+            android:textColor="@color/black"
+            app:layout_constraintEnd_toEndOf="@+id/row_imgProduct"
+            app:layout_constraintTop_toBottomOf="@+id/row_imgProduct" />
+
+        <TextView
+            android:id="@+id/row_lblProductCategory"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/vazir"
+            android:text="الکترونیک"
+            android:textSize="10sp"
+            app:layout_constraintEnd_toEndOf="@+id/row_lblProductName"
+            app:layout_constraintTop_toBottomOf="@+id/row_lblProductName" />
+
+        <TextView
+            android:id="@+id/row_lblProductPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginBottom="8dp"
+            android:fontFamily="@font/vazir"
+            android:text="20,000 تومان"
+            android:textColor="@color/design_default_color_secondary_variant"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/row_imgProduct"
+            app:layout_constraintTop_toBottomOf="@+id/row_lblProductCategory" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

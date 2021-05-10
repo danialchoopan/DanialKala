@@ -3,6 +3,7 @@
     package="ir.danialchoopan.danialkala">
 
     <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -10,14 +11,22 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.DanialKala">
-        <activity android:name=".SplashActivity">
+        <activity
+            android:name=".ui.searchProduct.SearchActivity"
+            android:label="@string/title_activity_search"></activity>
+        <activity android:name=".ui.productReview.ProductShowReviewActivity" />
+        <activity android:name=".ui.showProductsProperties.ShowProductsPropertiesActivity" />
+        <activity android:name=".ui.showCategory.ShowCategoryActivity" />
+        <activity android:name=".ui.category.ProductCategoryActivity" />
+        <activity android:name=".ui.product.ShowProductActivity" />
+        <activity android:name=".ui.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".HomeActivity"></activity>
+        <activity android:name=".SplashActivity" />
     </application>
 
 </manifest>

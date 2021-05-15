@@ -40,19 +40,17 @@
                     android:id="@+id/toolbar_img_btn_search_icon"
                     android:layout_width="40dp"
                     android:layout_height="40dp"
+                    android:layout_centerVertical="true"
                     android:background="@android:color/transparent"
                     android:scaleType="fitXY"
-                    android:src="@drawable/ic_baseline_search_24"
-                    android:layout_centerVertical="true"
-                    />
+                    android:src="@drawable/ic_baseline_search_24" />
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
         <ScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scrollbars="none"
-            >
+            android:scrollbars="none">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -98,5 +96,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/header_main_navigation_menu"
-        app:menu="@menu/main_navigation_menu" />
+        app:menu="@menu/main_navigation_menu"
+        app:itemTextAppearance="@style/NavigationViewStyle"
+
+        />
 </androidx.drawerlayout.widget.DrawerLayout>

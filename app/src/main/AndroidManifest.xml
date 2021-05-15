@@ -11,9 +11,23 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.DanialKala">
+        <activity android:name=".ui.profile.item.ItemEditProfileActivity"></activity>
+        <activity android:name=".ui.profile.UserProfileActivity" />
+        <activity
+            android:name=".ui.userAuth.PhoneVerifyActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.userAuth.UserRegisterActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.userAuth.UserLoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity
             android:name=".ui.searchProduct.SearchActivity"
-            android:label="@string/title_activity_search"></activity>
+            android:label="@string/title_activity_search" />
         <activity android:name=".ui.productReview.ProductShowReviewActivity" />
         <activity android:name=".ui.showProductsProperties.ShowProductsPropertiesActivity" />
         <activity android:name=".ui.showCategory.ShowCategoryActivity" />

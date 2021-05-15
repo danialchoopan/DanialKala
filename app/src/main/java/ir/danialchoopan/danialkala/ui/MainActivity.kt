@@ -2,12 +2,14 @@ package ir.danialchoopan.danialkala.ui
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Typeface
 import android.os.Bundle
 import android.text.Spannable
 import android.text.SpannableString
 import android.view.MenuItem
 import android.view.SubMenu
+import android.widget.TextView
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -16,21 +18,29 @@ import androidx.recyclerview.widget.StaggeredGridLayoutManager
 import ir.danialchoopan.danialkala.R
 import ir.danialchoopan.danialkala.adapter.category.RecyclerViewCategoryProductHome
 import ir.danialchoopan.danialkala.adapter.slider.ImgSliderViewPagerAdapter
+import ir.danialchoopan.danialkala.data.UserSharePreferences
+import ir.danialchoopan.danialkala.data.api.volleyRequestes.auth.AuthUserVolleyRequest
 import ir.danialchoopan.danialkala.fragments.home.HomePageViewModel
 import ir.danialchoopan.danialkala.ui.category.ProductCategoryActivity
+import ir.danialchoopan.danialkala.ui.profile.UserProfileActivity
 import ir.danialchoopan.danialkala.ui.searchProduct.SearchActivity
+import ir.danialchoopan.danialkala.ui.userAuth.UserRegisterActivity
 import ir.danialchoopan.danialkala.utails.CustomTypefaceSpan
 import kotlinx.android.synthetic.main.activity_main.*
 
 
 class MainActivity : AppCompatActivity() {
 
-    var iranianSansFont: Typeface? = null
-
+    lateinit var userSharePreferences: SharedPreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
+        AuthUserVolleyRequest(this@MainActivity).checkToken { success ->
+            if (!success) {
+                UserSharePreferences(this@MainActivity).sharePreferences.edit().clear().apply()
+            }
+        }
+        userSharePreferences = UserSharePreferences(this@MainActivity).sharePreferences
         //set toolbar and navigation menu
         setSupportActionBar(toolbar_main_activity)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
@@ -38,24 +48,25 @@ class MainActivity : AppCompatActivity() {
             this@MainActivity, drawer_layout_main_activity, toolbar_main_activity,
             R.string.open, R.string.close
         )
+        actionbarToggle.drawerArrowDrawable.color = getColor(R.color.white)
         drawer_layout_main_activity.addDrawerListener(actionbarToggle)
         actionbarToggle.syncState()
         //end nav menu
         //set font family nav menus
-        val menu_item_nav = nav_menu_main_activity.menu
-        for (i in 0 until menu_item_nav.size()) {
-            val mi = menu_item_nav.getItem(i)
-            if (mi.subMenu != null) {
-                val subMenu: SubMenu = mi.subMenu
-                if (subMenu.size() > 0) {
-                    for (j in 0 until subMenu.size()) {
-                        val subMenuItem = subMenu.getItem(j)
-                        applyFontToMenuItem(subMenuItem)
-                    }
-                }
-            }
-            applyFontToMenuItem(mi)
-        }
+//        val menu_item_nav = nav_menu_main_activity.menu
+//        for (i in 0 until menu_item_nav.size()) {
+//            val mi = menu_item_nav.getItem(i)
+//            if (mi.subMenu != null) {
+//                val subMenu: SubMenu = mi.subMenu
+//                if (subMenu.size() > 0) {
+//                    for (j in 0 until subMenu.size()) {
+//                        val subMenuItem = subMenu.getItem(j)
+//                        applyFontToMenuItem(subMenuItem)
+//                    }
+//                }
+//            }
+//            applyFontToMenuItem(mi)
+//        }
         //end set nav menu font family
 
 
@@ -102,7 +113,7 @@ class MainActivity : AppCompatActivity() {
 
         //open search activity
         toolbar_img_btn_search_icon.setOnClickListener {
-            Intent(this@MainActivity, SearchActivity::class.java).also {intent ->
+            Intent(this@MainActivity, SearchActivity::class.java).also { intent ->
                 startActivity(intent)
             }
         }
@@ -110,23 +121,27 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun applyFontToMenuItem(mi: MenuItem) {
-        val mNewTitle = SpannableString(mi.getTitle())
-        mNewTitle.setSpan(
-            CustomTypefaceSpan(
-                applicationContext, "", getIranianSansFont(
-                    applicationContext
-                )
-            ), 0, mNewTitle.length, Spannable.SPAN_INCLUSIVE_INCLUSIVE
-        )
-        mi.setTitle(mNewTitle)
-    }
-
-    fun getIranianSansFont(context: Context): Typeface? {
-        if (iranianSansFont == null) {
-            iranianSansFont =
-                Typeface.createFromAsset(context.getAssets(), "fonts/iranian_sans.ttf")
+    override fun onResume() {
+        super.onResume()
+        userSharePreferences = UserSharePreferences(this@MainActivity).sharePreferences
+        //on click auth btn on
+        val auth_header_lable =
+            nav_menu_main_activity.getHeaderView(0).findViewById<TextView>(R.id.tv_auth_header_nav)
+        val userNameShare = userSharePreferences.getString("name", "")
+        if (userNameShare!!.isNotEmpty()) {
+            auth_header_lable.text = userNameShare
+            auth_header_lable.setOnClickListener {
+                Intent(this@MainActivity, UserProfileActivity::class.java).also { intent ->
+                    startActivity(intent)
+                }
+            }
+        } else {
+            auth_header_lable.text = "نام نویسی / ورود"
+            auth_header_lable.setOnClickListener {
+                Intent(this@MainActivity, UserRegisterActivity::class.java).also { intent ->
+                    startActivity(intent)
+                }
+            }
         }
-        return iranianSansFont
     }
 }

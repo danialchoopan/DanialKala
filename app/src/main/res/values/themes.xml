@@ -17,4 +17,10 @@
     <style name="tabLayout_category" parent="@android:style/TextAppearance.Widget.TabWidget">
         <item name="android:fontFamily">@font/vazir</item>
     </style>
+
+    <style name="NavigationViewStyle">
+        <item name="android:textSize">18sp</item> <!-- menu item text size-->
+        <item name="android:listPreferredItemHeightSmall">18sp</item><!-- menu item height-->
+        <item name="fontFamily">@font/vazir</item>
+    </style>
 </resources>

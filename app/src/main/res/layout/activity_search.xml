@@ -30,6 +30,15 @@
                 android:scaleType="fitXY"
                 android:src="@drawable/ic_baseline_close_24"
                 android:visibility="gone" />
+            <ImageButton
+                android:id="@+id/search_imgBtnMic"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
+                android:background="@android:color/transparent"
+                android:scaleType="fitXY"
+                android:src="@drawable/ic_baseline_mic_24"
+                />
+
 
             <EditText
                 android:id="@+id/search_txt_text"

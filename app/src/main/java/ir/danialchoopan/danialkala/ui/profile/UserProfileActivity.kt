@@ -6,6 +6,7 @@ import android.os.Bundle
 import ir.danialchoopan.danialkala.R
 import ir.danialchoopan.danialkala.data.UserSharePreferences
 import ir.danialchoopan.danialkala.ui.profile.item.ItemEditProfileActivity
+import ir.danialchoopan.danialkala.ui.profile.item.userAddress.UserAddressIndexActivity
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import kotlinx.android.synthetic.main.toolbar_auth_user_activities.*
 
@@ -30,6 +31,12 @@ class UserProfileActivity : AppCompatActivity() {
         }
         profile_item_edit_profile.setOnClickListener {
             Intent(this@UserProfileActivity, ItemEditProfileActivity::class.java).also { intent ->
+                startActivity(intent)
+            }
+        }
+
+        profile_item_address.setOnClickListener {
+            Intent(this@UserProfileActivity, UserAddressIndexActivity::class.java).also { intent ->
                 startActivity(intent)
             }
         }

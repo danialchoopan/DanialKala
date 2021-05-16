@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.widget.Toast
 import ir.danialchoopan.danialkala.R
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.auth.AuthUserVolleyRequest
+import ir.danialchoopan.danialkala.dialog.LoadingProcessDialog
 import kotlinx.android.synthetic.main.activity_user_login.*
 import kotlinx.android.synthetic.main.activity_user_login.view.*
 import kotlinx.android.synthetic.main.activity_user_register.*
@@ -31,6 +32,8 @@ class UserLoginActivity : AppCompatActivity() {
             }
         }
         btn_login_user.setOnClickListener {
+            val loadingDialogLogin = LoadingProcessDialog(this@UserLoginActivity).create()
+            loadingDialogLogin.show()
             val authUserRequest = AuthUserVolleyRequest(this@UserLoginActivity)
             if (checkUserInputs()) {
                 val e_email = layoutEtxt_email_login.editText!!.text.toString()
@@ -39,6 +42,7 @@ class UserLoginActivity : AppCompatActivity() {
                     e_email,
                     e_password
                 ) { success, loginUserDataModel ->
+                    loadingDialogLogin.dismiss()
                     if (success) {
                         Toast.makeText(
                             this@UserLoginActivity,
@@ -50,7 +54,12 @@ class UserLoginActivity : AppCompatActivity() {
                             this@UserLoginActivity,
                             PhoneVerifyActivity::class.java
                         ).also { intent ->
+                            intent.putExtra("intentUserToken", loginUserDataModel.token)
+                            intent.putExtra("intentUserName", loginUserDataModel.user.name)
+                            intent.putExtra("intentUserEmail", loginUserDataModel.user.email)
+                            intent.putExtra("intentUserPhone", loginUserDataModel.user.phone)
                             startActivity(intent)
+                            finish()
                         }//end intent
                     } else {
                         Toast.makeText(

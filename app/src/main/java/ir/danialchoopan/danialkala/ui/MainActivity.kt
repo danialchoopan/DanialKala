@@ -10,6 +10,7 @@ import android.text.SpannableString
 import android.view.MenuItem
 import android.view.SubMenu
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
@@ -35,9 +36,22 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        AuthUserVolleyRequest(this@MainActivity).checkToken { success ->
+        val authUserVolleyRequest = AuthUserVolleyRequest(this@MainActivity)
+        authUserVolleyRequest.checkToken { success ->
             if (!success) {
                 UserSharePreferences(this@MainActivity).sharePreferences.edit().clear().apply()
+                Toast.makeText(this@MainActivity, "ورود شما منفضی شده است", Toast.LENGTH_SHORT)
+                    .show()
+            } else {
+                authUserVolleyRequest.checkIfPhoneVerified{ verified ->
+                    if (!verified){
+                        UserSharePreferences(this@MainActivity).sharePreferences.edit().clear().apply()
+                        Toast.makeText(this@MainActivity, "ورود شما منفضی شده است", Toast.LENGTH_SHORT)
+                            .show()
+                        Toast.makeText(this@MainActivity, "لطفا شماره همراه خود را تایید کنید", Toast.LENGTH_SHORT)
+                            .show()
+                    }
+                }
             }
         }
         userSharePreferences = UserSharePreferences(this@MainActivity).sharePreferences

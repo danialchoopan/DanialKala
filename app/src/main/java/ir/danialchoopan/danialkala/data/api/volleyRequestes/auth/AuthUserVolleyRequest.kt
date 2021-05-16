@@ -7,8 +7,10 @@ import ir.danialchoopan.danialkala.data.UserSharePreferences
 import ir.danialchoopan.danialkala.data.api.EndPoints
 import ir.danialchoopan.danialkala.data.api.VolleySingleTon
 import ir.danialchoopan.danialkala.data.model.requests.editProfile.EditProfileDataModelRequest
+import ir.danialchoopan.danialkala.data.model.requests.editProfile.UserInfo
 import ir.danialchoopan.danialkala.data.model.requests.register.RegisterUserDataModel
 import ir.danialchoopan.danialkala.data.model.requests.register.User
+import ir.danialchoopan.danialkala.data.model.requests.editProfile.User as UserModelInfo
 import ir.danialchoopan.danialkala.data.model.requests.sendCodeSms.SendCodeSMS
 import org.json.JSONObject
 
@@ -86,13 +88,15 @@ class AuthUserVolleyRequest(private val m_context: Context) {
                     val registerResult =
                         Gson().fromJson(strResponse, RegisterUserDataModel::class.java)
                     resultRequest(success, registerResult)
-                    userSharePreferences.sharePreferences.edit().also {
-                        it.putString("token", registerResult.token)
-                        it.putString("name", registerResult.user.name)
-                        it.putString("email", registerResult.user.email)
-                        it.putString("phone", registerResult.user.phone)
-                    }.apply()
-
+                    //if user verify his phone number remember the user
+                    if (registerResult.user.phone_verified != "0") {
+                        userSharePreferences.sharePreferences.edit().also {
+                            it.putString("token", registerResult.token)
+                            it.putString("name", registerResult.user.name)
+                            it.putString("email", registerResult.user.email)
+                            it.putString("phone", registerResult.user.phone)
+                        }.apply()
+                    }
                 } catch (e: Exception) {
                     resultRequest(
                         success, RegisterUserDataModel(
@@ -131,12 +135,17 @@ class AuthUserVolleyRequest(private val m_context: Context) {
     }
 
     fun checkIfPhoneVerified(
+        userToken: String = "",
         resultRequest: (verified: Boolean) -> Unit
     ) {
         val str_login_request = object : StringRequest(Method.POST, EndPoints.checkVerifyPhone,
             { strResponse ->
-                val jsonResult = JSONObject(strResponse)
-                resultRequest(jsonResult.getBoolean("verified"))
+                try {
+                    val jsonResult = JSONObject(strResponse)
+                    resultRequest(jsonResult.getBoolean("verified"))
+                } catch (e: Exception) {
+                    resultRequest(false)
+                }
             }
             //error
             , {
@@ -144,7 +153,12 @@ class AuthUserVolleyRequest(private val m_context: Context) {
             }) {
 
             override fun getHeaders(): MutableMap<String, String> {
-                val token_access = userSharePreferences.getToken()
+                var token_access = ""
+                token_access = if (userSharePreferences.getToken().isNotEmpty()) {
+                    userSharePreferences.getToken()
+                } else {
+                    userToken
+                }
                 val requestHeaders = HashMap<String, String>()
                 requestHeaders["Authorization"] = "Bearer $token_access";
                 return requestHeaders
@@ -155,7 +169,7 @@ class AuthUserVolleyRequest(private val m_context: Context) {
         VolleySingleTon.getInstance(m_context).addToRequestQueue(str_login_request)
     }
 
-    fun requestSendValidationSms() {
+    fun requestSendValidationSms(userToken: String = "") {
         val str_send_validation_request =
             object : StringRequest(Method.POST, EndPoints.sendSmsVerifyUserCode,
                 { strResponse ->
@@ -167,7 +181,12 @@ class AuthUserVolleyRequest(private val m_context: Context) {
                 }) {
 
                 override fun getHeaders(): MutableMap<String, String> {
-                    val token_access = userSharePreferences.getToken()
+                    var token_access = ""
+                    token_access = if (userSharePreferences.getToken().isNotEmpty()) {
+                        userSharePreferences.getToken()
+                    } else {
+                        userToken
+                    }
                     val requestHeaders = HashMap<String, String>()
                     requestHeaders["Authorization"] = "Bearer $token_access";
                     return requestHeaders
@@ -179,6 +198,7 @@ class AuthUserVolleyRequest(private val m_context: Context) {
     }
 
     fun sendUserVerifySmsCode(
+        userToken: String,
         code: String,
         resultRequest: (sendCodeSMS: SendCodeSMS) -> Unit
     ) {
@@ -200,7 +220,13 @@ class AuthUserVolleyRequest(private val m_context: Context) {
                 }
 
                 override fun getHeaders(): MutableMap<String, String> {
-                    val token_access = userSharePreferences.getToken()
+
+                    var token_access = ""
+                    token_access = if (userSharePreferences.getToken().isNotEmpty()) {
+                        userSharePreferences.getToken()
+                    } else {
+                        userToken
+                    }
                     val requestHeaders = HashMap<String, String>()
                     requestHeaders["Authorization"] = "Bearer $token_access";
                     return requestHeaders
@@ -237,14 +263,43 @@ class AuthUserVolleyRequest(private val m_context: Context) {
         VolleySingleTon.getInstance(m_context).addToRequestQueue(str_token_request)
     }
 
-    //----------
     fun getUserData(
         resultRequest: (editProfileDataModelRequest: EditProfileDataModelRequest) -> Unit
     ) {
-        val str_token_request = object : StringRequest(Method.POST, EndPoints.checkVerifyPhone,
+        val str_request = object : StringRequest(Method.GET, EndPoints.getUserInfo,
             { strResponse ->
-                val jsonResult = JSONObject(strResponse)
-                resultRequest(jsonResult.getBoolean("success"))
+                try {
+                    val gsonEditProfileDataModelRequest =
+                        Gson().fromJson(strResponse, EditProfileDataModelRequest::class.java)
+                    resultRequest(gsonEditProfileDataModelRequest)
+                } catch (e: Exception) {
+                    resultRequest(
+                        EditProfileDataModelRequest(
+                            false,
+                            UserModelInfo(
+                                "",
+                                "",
+                                "",
+                                1,
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                UserInfo(
+                                    "",
+                                    "",
+                                    "",
+                                    1,
+                                    "",
+                                    "",
+                                    "",
+                                    "",
+                                ),
+                            )
+                        )
+                    )//end result request
+                }//end catch
             }
             //error
             , {
@@ -260,6 +315,6 @@ class AuthUserVolleyRequest(private val m_context: Context) {
             }
 
         }//end request register
-        VolleySingleTon.getInstance(m_context).addToRequestQueue(str_token_request)
+        VolleySingleTon.getInstance(m_context).addToRequestQueue(str_request)
     }
 }

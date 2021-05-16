@@ -94,6 +94,7 @@
 
 
             <androidx.cardview.widget.CardView
+                android:id="@+id/profile_item_address"
                 android:layout_width="match_parent"
                 android:layout_height="60dp">
 

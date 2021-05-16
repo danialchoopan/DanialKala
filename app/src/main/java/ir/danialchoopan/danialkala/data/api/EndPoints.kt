@@ -1,7 +1,7 @@
 package ir.danialchoopan.danialkala.data.api
 
 object EndPoints {
-    const private val domain="http://192.168.43.166:8000"
+    const private val domain="http://192.168.56.1:8000"
     const val baseUrl = "$domain/api/"
     const val storage = "$domain/storage/"
     const val storageImg = "$domain/"
@@ -17,4 +17,14 @@ object EndPoints {
     const val checkVerifyPhone = "${baseUrl}auth/user/checkIfPhoneVerified/"
     const val sendSmsVerifyUserCode = "${baseUrl}auth/user/sendVerifyPhoneSms/"
     const val confirmVerifyPhoneSms = "${baseUrl}auth/user/confirmVerifyPhoneSms/"
+
+    //edit profile routes
+
+    //user address routes
+    val userAddress="${baseUrl}user/addess/"
+
+
+    //states
+    val states="${baseUrl}states/"
+    //end states
 }

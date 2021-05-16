@@ -10,6 +10,7 @@ import android.view.View
 import android.widget.Toast
 import ir.danialchoopan.danialkala.R
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.auth.AuthUserVolleyRequest
+import ir.danialchoopan.danialkala.dialog.LoadingProcessDialog
 import kotlinx.android.synthetic.main.activity_user_register.*
 import kotlinx.android.synthetic.main.toolbar_auth_user_activities.*
 
@@ -35,7 +36,8 @@ class UserRegisterActivity : AppCompatActivity() {
 
         //btn register user
         btn_register_user.setOnClickListener {
-            progressBar_register.visibility = View.VISIBLE
+            val loadingDialogRegister=LoadingProcessDialog(this@UserRegisterActivity).create()
+            loadingDialogRegister.show()
             val authUserRequest = AuthUserVolleyRequest(this@UserRegisterActivity)
             if (checkUserInputs()) {
                 val e_name = layoutEtxt_name.editText!!.text.toString()
@@ -48,7 +50,7 @@ class UserRegisterActivity : AppCompatActivity() {
                     e_phone,
                     e_password
                 ) { success, registerUserDataModel ->
-                    progressBar_register.visibility = View.GONE
+                    loadingDialogRegister.dismiss()
                     if (success) {
                         Toast.makeText(
                             this@UserRegisterActivity,
@@ -60,7 +62,12 @@ class UserRegisterActivity : AppCompatActivity() {
                             this@UserRegisterActivity,
                             PhoneVerifyActivity::class.java
                         ).also { intent ->
+                            intent.putExtra("intentUserToken", registerUserDataModel.token)
+                            intent.putExtra("intentUserName", registerUserDataModel.user.name)
+                            intent.putExtra("intentUserEmail", registerUserDataModel.user.email)
+                            intent.putExtra("intentUserPhone", registerUserDataModel.user.phone)
                             startActivity(intent)
+                            finish()
                         }//end intent
                     } else {
                         Toast.makeText(

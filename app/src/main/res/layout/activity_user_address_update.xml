@@ -1,30 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".ui.profile.item.ItemEditProfileActivity">
+    tools:context=".ui.profile.item.userAddress.UserAddressUpdateActivity">
 
-    <include layout="@layout/toolbar_auth_user_activities" />
+    <include
+        android:id="@+id/include"
+        layout="@layout/toolbar_auth_user_activities"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
 
     <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_update_address"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include">
 
         <LinearLayout
+            android:id="@+id/linearLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingTop="5dp">
+            android:orientation="vertical">
+
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_profile_layoutEtxt_name"
+                android:id="@+id/layoutEtxt_post_code_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="6dp"
-                android:hint="نام">
+                android:layout_margin="5dp"
+                android:hint="کد پستی">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -32,13 +48,12 @@
                     android:fontFamily="@font/vazir" />
             </com.google.android.material.textfield.TextInputLayout>
 
-
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_profile_layoutEtxt_phone"
+                android:id="@+id/layoutEtxt_lanline_phone_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="6dp"
-                android:hint="شماره همراه">
+                android:layout_margin="5dp"
+                android:hint="تلفن">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
@@ -46,19 +61,19 @@
                     android:fontFamily="@font/vazir" />
             </com.google.android.material.textfield.TextInputLayout>
 
-
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/edit_profile_layoutEtxt_national_code"
+                android:id="@+id/layoutEtxt_address_phone_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="6dp"
-                android:hint="کد ملی">
+                android:layout_margin="5dp"
+                android:hint="شماره همراه گیرنده">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="@font/vazir" />
             </com.google.android.material.textfield.TextInputLayout>
+
 
             <TextView
                 android:id="@+id/textView"
@@ -67,7 +82,7 @@
                 android:layout_margin="5dp"
                 android:fontFamily="@font/vazir"
                 android:paddingRight="10dp"
-                android:text="شهر محل سکونت"
+                android:text="آدرس"
                 android:textColor="@color/black"
                 android:textSize="16sp" />
 
@@ -77,8 +92,9 @@
                 android:layout_margin="5dp"
                 android:orientation="horizontal">
 
+
                 <Spinner
-                    android:id="@+id/edit_profile_spinner_cities"
+                    android:id="@+id/address_city_spinner_update"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
@@ -86,28 +102,42 @@
                     android:spinnerMode="dialog" />
 
                 <Spinner
-                    android:id="@+id/edit_profile_spinner_states"
+                    android:id="@+id/address_state_spinner_update"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
                     android:layout_weight="1"
                     android:spinnerMode="dialog" />
-
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_save_edit_user_info"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/layoutEtxt_old_address_text_update"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="5dp"
-                android:fontFamily="@font/vazir"
-                android:padding="10dp"
-                android:text="ذخیره"
-                android:textSize="18sp" />
+                android:hint="آدرس">
 
-
+                <com.google.android.material.textfield.TextInputEditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/vazir" />
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
-
     </ScrollView>
 
-</LinearLayout>
+    <Button
+        android:id="@+id/btn_update_address"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="0dp"
+        android:background="@color/blue_500"
+        android:fontFamily="@font/vazir"
+        android:padding="6dp"
+        android:text="بروزرسانی آدرس"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

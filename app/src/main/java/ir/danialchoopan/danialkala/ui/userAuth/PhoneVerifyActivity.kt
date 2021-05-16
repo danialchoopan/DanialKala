@@ -13,25 +13,27 @@ import android.widget.Toast
 import ir.danialchoopan.danialkala.R
 import ir.danialchoopan.danialkala.data.UserSharePreferences
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.auth.AuthUserVolleyRequest
+import ir.danialchoopan.danialkala.dialog.LoadingProcessDialog
 import ir.danialchoopan.danialkala.ui.MainActivity
 import kotlinx.android.synthetic.main.activity_phone_varify.*
 import kotlinx.android.synthetic.main.toolbar_auth_user_activities.*
 
 class PhoneVerifyActivity : AppCompatActivity() {
+    lateinit var counter_time: CountDownTimer
+    lateinit var intentUserToken: String
+    lateinit var authUserVolleyRequest: AuthUserVolleyRequest
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //get user info from intent
+        intentUserToken = intent.extras!!.getString("intentUserToken", "")
+        val intentUserName = intent.extras!!.getString("intentUserName", "")
+        val intentUserEmail = intent.extras!!.getString("intentUserEmail", "")
+        val intentUserPhone = intent.extras!!.getString("intentUserPhone", "")
+        //user share
+        val userSharePreferences = UserSharePreferences(this@PhoneVerifyActivity)
         //check if user phone number verified
-        val authUserVolleyRequest = AuthUserVolleyRequest(this@PhoneVerifyActivity)
-        authUserVolleyRequest.checkIfPhoneVerified { verified ->
-            if (verified) {
-                Intent(this@PhoneVerifyActivity, MainActivity::class.java).also { intent ->
-                    startActivity(intent)
-                    finish()
-                }
-            } else {
-                authUserVolleyRequest.requestSendValidationSms()
-            }
-        }
+        authUserVolleyRequest = AuthUserVolleyRequest(this@PhoneVerifyActivity)
+        checkIfphoneVerified()
         //end check if user phone number verified
         setContentView(R.layout.activity_phone_varify)
         //close btn
@@ -40,7 +42,6 @@ class PhoneVerifyActivity : AppCompatActivity() {
         }
         //set toolbar title
         toolbar_auth_title.text = "تایید شماره همراه"
-
 
         //verify
         val ar_number_verify = arrayOf(
@@ -86,17 +87,31 @@ class PhoneVerifyActivity : AppCompatActivity() {
         }//end for txt
 
         btn_verify_phone_user.setOnClickListener {
-            progress_bar_verify_phone.visibility = View.VISIBLE
+            val loadingDialogPhoneVerify = LoadingProcessDialog(this@PhoneVerifyActivity).create()
+            loadingDialogPhoneVerify.show()
             val sumNumber =
                 verify_number_1.text.toString() + verify_number_2.text.toString() + verify_number_3.text.toString() +
                         verify_number_4.text.toString() + verify_number_5.text.toString() + verify_number_6.text.toString()
             Log.i("Sum number ", sumNumber)
-            authUserVolleyRequest.sendUserVerifySmsCode(sumNumber) { sendcode ->
-                progress_bar_verify_phone.visibility = View.GONE
+            authUserVolleyRequest.sendUserVerifySmsCode(intentUserToken, sumNumber) { sendcode ->
+                loadingDialogPhoneVerify.dismiss()
                 when (sendcode.response_code) {
                     201 -> {
+                        userSharePreferences.sharePreferences.edit().also { share ->
+                            share.putString("token", intentUserToken)
+                            share.putString("name", intentUserName)
+                            share.putString("email", intentUserEmail)
+                            share.putString("phone", intentUserPhone)
+                        }.apply()
+
                         Intent(this@PhoneVerifyActivity, MainActivity::class.java).also { intent ->
                             startActivity(intent)
+
+                            Toast.makeText(
+                                this@PhoneVerifyActivity,
+                                "کد شما تایید شد.",
+                                Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
                     //invalid code
@@ -106,6 +121,7 @@ class PhoneVerifyActivity : AppCompatActivity() {
                             "کد شما اشتباه است",
                             Toast.LENGTH_SHORT
                         ).show()
+                        clearTextFields()
                     }
                     //code expire
                     203 -> {
@@ -114,22 +130,53 @@ class PhoneVerifyActivity : AppCompatActivity() {
                             "کد شما منقضی شده است",
                             Toast.LENGTH_SHORT
                         ).show()
+                        clearTextFields()
                     }
                 }
             }
         }
 
 
-        val counter_time = object : CountDownTimer(60000, 1000) {
+        counter_time = object : CountDownTimer(60000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 val time_secend = millisUntilFinished / 1000
                 phone_verify_count_time.text = "ارسال دوباره کد : ${time_secend}"
             }
 
             override fun onFinish() {
-
+                counter_time.cancel()
+                phone_verify_count_time.text = "برای ارسال دوباره کد کلیک کنید"
+                phone_verify_count_time.setOnClickListener {
+                    counter_time.start()
+                    //send code
+                    authUserVolleyRequest.requestSendValidationSms(intentUserToken)
+                    //end send code
+                }
             }
         }
         counter_time.start()
+    }
+
+    private fun clearTextFields() {
+        verify_number_1.setText("")
+        verify_number_2.setText("")
+        verify_number_3.setText("")
+        verify_number_4.setText("")
+        verify_number_5.setText("")
+        verify_number_6.setText("")
+        verify_number_1.requestFocus()
+    }
+
+    private fun checkIfphoneVerified() {
+        authUserVolleyRequest.checkIfPhoneVerified(intentUserToken) { verified ->
+            if (verified) {
+                Intent(this@PhoneVerifyActivity, MainActivity::class.java).also { intent ->
+                    startActivity(intent)
+                    finish()
+                }
+            } else {
+                authUserVolleyRequest.requestSendValidationSms(intentUserToken)
+            }
+        }
     }
 }

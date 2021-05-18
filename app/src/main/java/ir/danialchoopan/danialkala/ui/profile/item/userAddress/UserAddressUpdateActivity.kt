@@ -23,7 +23,7 @@ class UserAddressUpdateActivity : AppCompatActivity() {
 
     var dataReceived = false
     var address_city_id = 0
-
+    var address_city_enable = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_address_update)
@@ -34,7 +34,6 @@ class UserAddressUpdateActivity : AppCompatActivity() {
         }
         //get intent
         val userAddressItemId = intent.extras!!.getInt("userAddressItemId")
-
         //get states and cities form api
         val showStatesVolleyRequest = ShowStatesVolleyRequest(this@UserAddressUpdateActivity)
         showStatesVolleyRequest.getStates { success, statesRequestDataModel ->
@@ -112,6 +111,7 @@ class UserAddressUpdateActivity : AppCompatActivity() {
                 ) {
                     if (dataReceived) {
                         address_city_id = ar_city_statesRequestDataModel[position].idcity
+                        address_city_enable = true
                     }
                 }
 
@@ -130,7 +130,10 @@ class UserAddressUpdateActivity : AppCompatActivity() {
         userAddressVolleyRequest.getUserAddress(userAddressItemId.toString()) { success, userAddress ->
             loadingProcessDialogLoadInfo.dismiss()
             if (success) {
-
+                layoutEtxt_post_code_update.editText!!.setText(userAddress.post_code)
+                layoutEtxt_lanline_phone_update.editText!!.setText(userAddress.lanline_phone)
+                layoutEtxt_address_phone_update.editText!!.setText(userAddress.addess_phone)
+                layoutEtxt_old_address_text_update.editText!!.setText(userAddress.address)
             } else {
                 Toast.makeText(
                     this@UserAddressUpdateActivity,
@@ -143,9 +146,13 @@ class UserAddressUpdateActivity : AppCompatActivity() {
 
         //send data
 
-        btn_add_address.setOnClickListener {
-            val state_name = address_state_spinner_update.selectedItem.toString()
-            val city_name = address_city_spinner_update.selectedItem.toString()
+        btn_update_address.setOnClickListener {
+            var state_name = ""
+            var city_name = ""
+            if (address_city_enable) {
+                state_name = address_state_spinner_update.selectedItem.toString()
+                city_name = address_city_spinner_update.selectedItem.toString()
+            }
             val city_code = address_city_id.toString()
             val lanline = layoutEtxt_lanline_phone_update.editText!!.text.toString()
             val post_code = layoutEtxt_post_code_update.editText!!.text.toString()

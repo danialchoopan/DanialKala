@@ -3,11 +3,13 @@ package ir.danialchoopan.danialkala.ui.product
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import ir.danialchoopan.danialkala.R
 import ir.danialchoopan.danialkala.adapter.slider.ImgSliderProductViewPagerAdapter
 import ir.danialchoopan.danialkala.adapter.slider.ImgSliderProductViewPagerAdapterForProducts
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.ShowProductReviewVolleyRequest
+import ir.danialchoopan.danialkala.data.api.volleyRequestes.favoriteProduct.FavoriteProductVolleyRequest
 import ir.danialchoopan.danialkala.data.model.requests.home.New_products
 import ir.danialchoopan.danialkala.data.model.requests.showCategory.Products
 import ir.danialchoopan.danialkala.ui.showProductsProperties.ShowProductsPropertiesActivity
@@ -21,11 +23,41 @@ class ShowProductActivity : AppCompatActivity() {
         product_show_btn_back.setOnClickListener {
             finish()
         }
-
+        val favoriteProductVolleyRequest = FavoriteProductVolleyRequest(this@ShowProductActivity)
         //get product item
         try {
             val productItem = intent.extras!!.get("productItem") as New_products
 
+            show_product_favorite_img_progress_bar.visibility=View.VISIBLE
+            show_product_favorite_img.visibility=View.GONE
+            favoriteProductVolleyRequest.checkIfProductLiked(productItem.id.toString()) { favorite ->
+                Log.i("favorite prod",favorite.toString())
+                show_product_favorite_img_progress_bar.visibility=View.GONE
+                show_product_favorite_img.visibility=View.VISIBLE
+                if (favorite) {
+                    show_product_favorite_img.setImageResource(R.drawable.ic_baseline_favorite_24_red)
+                } else {
+                    show_product_favorite_img.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                }
+            }
+            show_product_favorite_img.setOnClickListener {
+                show_product_favorite_img_progress_bar.visibility=View.VISIBLE
+                show_product_favorite_img.visibility=View.GONE
+                favoriteProductVolleyRequest.likeProduct(productItem.id.toString()){
+
+                    favoriteProductVolleyRequest.checkIfProductLiked(productItem.id.toString()) { favorite ->
+                        Log.i("favorite send",favorite.toString())
+                        show_product_favorite_img_progress_bar.visibility=View.GONE
+                        show_product_favorite_img.visibility=View.VISIBLE
+                        if (favorite) {
+                            show_product_favorite_img.setImageResource(R.drawable.ic_baseline_favorite_24_red)
+                        } else {
+                            show_product_favorite_img.setImageResource(R.drawable.ic_baseline_favorite_border_24)
+                        }
+                    }
+
+                }
+            }
             //set adapter slider
             val productImgSliderAdapter =
                 ImgSliderProductViewPagerAdapter(
@@ -73,7 +105,7 @@ class ShowProductActivity : AppCompatActivity() {
                     show_product_linear_review_box.visibility = View.VISIBLE
                 }
 
-                if (productReview.review.isEmpty()){
+                if (productReview.review.isEmpty()) {
                     show_product_linear_review_box.visibility = View.GONE
                 }
             }
@@ -128,7 +160,7 @@ class ShowProductActivity : AppCompatActivity() {
                     show_product_linear_review_box.visibility = View.VISIBLE
                 }
 
-                if (productReview.review.isEmpty()){
+                if (productReview.review.isEmpty()) {
                     show_product_linear_review_box.visibility = View.GONE
                 }
             }

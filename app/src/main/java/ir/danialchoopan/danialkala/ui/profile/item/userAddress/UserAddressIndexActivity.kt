@@ -13,6 +13,7 @@ import kotlinx.android.synthetic.main.activity_user_address_index.*
 import kotlinx.android.synthetic.main.toolbar_auth_user_activities.*
 
 class UserAddressIndexActivity : AppCompatActivity() {
+    lateinit var userAddressRecyclerAdapter:UserAddressRecyclerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_address_index)
@@ -21,16 +22,33 @@ class UserAddressIndexActivity : AppCompatActivity() {
         toolbar_auth_close.setOnClickListener {
             finish()
         }
-        val userAddressVolleyRequest = UserAddressVolleyRequest(this@UserAddressIndexActivity)
         //setup recycler view
         rcy_userAddress.layoutManager = LinearLayoutManager(this@UserAddressIndexActivity)
-        val userAddressRecyclerAdapter = UserAddressRecyclerAdapter(this@UserAddressIndexActivity)
+        userAddressRecyclerAdapter = UserAddressRecyclerAdapter(this@UserAddressIndexActivity)
         rcy_userAddress.adapter = userAddressRecyclerAdapter
+        //fbtn for add user address activity
+        fbtn_AddAddress.setOnClickListener {
+            Intent(
+                this@UserAddressIndexActivity,
+                UserAddressAddActivity::class.java
+            ).also { intent ->
+                startActivity(intent)
+            }
+        }
 
+    }
+
+    override fun onResume() {
+        super.onResume()
+        readApiUserAddress()
+    }
+
+
+    private fun readApiUserAddress() {
+        val userAddressVolleyRequest = UserAddressVolleyRequest(this@UserAddressIndexActivity)
         //loading dialog
         val loadingProcessDialog = LoadingProcessDialog(this).create()
         loadingProcessDialog.show()
-        //get data form api
         userAddressVolleyRequest.readUserAddress { success, userAddress ->
             loadingProcessDialog.dismiss()
             if (success) {
@@ -43,16 +61,5 @@ class UserAddressIndexActivity : AppCompatActivity() {
                 ).show()
             }
         }
-
-        //fbtn for add user address activity
-        fbtn_AddAddress.setOnClickListener {
-            Intent(
-                this@UserAddressIndexActivity,
-                UserAddressAddActivity::class.java
-            ).also { intent ->
-                startActivity(intent)
-            }
-        }
-
     }
 }

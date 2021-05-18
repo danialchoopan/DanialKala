@@ -14,6 +14,7 @@ object EndPoints {
     const val login = "${baseUrl}auth/user/login/"
     const val tokenCheck= "${baseUrl}auth/user/checkToken/"
     const val getUserInfo = "${baseUrl}auth/user/getUserInfo/"
+    const val updateUserInfo = "${baseUrl}auth/user/updateUserInfo/"
     const val checkVerifyPhone = "${baseUrl}auth/user/checkIfPhoneVerified/"
     const val sendSmsVerifyUserCode = "${baseUrl}auth/user/sendVerifyPhoneSms/"
     const val confirmVerifyPhoneSms = "${baseUrl}auth/user/confirmVerifyPhoneSms/"
@@ -27,4 +28,10 @@ object EndPoints {
     //states
     val states="${baseUrl}states/"
     //end states
+
+    //favorite product
+    val favoriteProductCheck="${baseUrl}favorite/product/check/"
+    val likeProduct="${baseUrl}favorite/product/"
+    val allFavoriteProduct="${baseUrl}favorite/product/all"
+    //end favorite product
 }

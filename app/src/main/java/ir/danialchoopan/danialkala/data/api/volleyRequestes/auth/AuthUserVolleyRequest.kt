@@ -266,7 +266,7 @@ class AuthUserVolleyRequest(private val m_context: Context) {
     fun getUserData(
         resultRequest: (editProfileDataModelRequest: EditProfileDataModelRequest) -> Unit
     ) {
-        val str_request = object : StringRequest(Method.GET, EndPoints.getUserInfo,
+        val str_request = object : StringRequest(Method.POST, EndPoints.getUserInfo,
             { strResponse ->
                 try {
                     val gsonEditProfileDataModelRequest =
@@ -312,6 +312,79 @@ class AuthUserVolleyRequest(private val m_context: Context) {
                 requestHeaders["Authorization"] = "Bearer $token_access";
                 return requestHeaders
 
+            }
+
+        }//end request register
+        VolleySingleTon.getInstance(m_context).addToRequestQueue(str_request)
+    }
+
+    //update user info
+
+    fun updateUserData(
+        user_name: String,
+        phone: String,
+        national_code: String,
+        state_name: String,
+        city_name: String,
+        city_code: String,
+        resultRequest: (editProfileDataModelRequest: EditProfileDataModelRequest) -> Unit
+    ) {
+        val str_request = object : StringRequest(Method.PATCH, EndPoints.updateUserInfo,
+            { strResponse ->
+                try {
+                    val gsonEditProfileDataModelRequest =
+                        Gson().fromJson(strResponse, EditProfileDataModelRequest::class.java)
+                    resultRequest(gsonEditProfileDataModelRequest)
+                } catch (e: Exception) {
+                    resultRequest(
+                        EditProfileDataModelRequest(
+                            false,
+                            UserModelInfo(
+                                "",
+                                "",
+                                "",
+                                1,
+                                "",
+                                "",
+                                "",
+                                "",
+                                "",
+                                UserInfo(
+                                    "",
+                                    "",
+                                    "",
+                                    1,
+                                    "",
+                                    "",
+                                    "",
+                                    "",
+                                ),
+                            )
+                        )
+                    )//end result request
+                }//end catch
+            }
+            //error
+            , {
+                it.printStackTrace()
+            }) {
+
+            override fun getParams(): MutableMap<String, String> {
+                val requestParam = HashMap<String, String>()
+                requestParam["user_name"] = user_name
+                requestParam["phone"] = phone
+                requestParam["national_code"] = national_code
+                requestParam["state_name"] = state_name
+                requestParam["city_name"] = city_name
+                requestParam["city_code"] = city_code
+                return requestParam
+            }
+
+            override fun getHeaders(): MutableMap<String, String> {
+                val token_access = userSharePreferences.getToken()
+                val requestHeaders = HashMap<String, String>()
+                requestHeaders["Authorization"] = "Bearer $token_access";
+                return requestHeaders
             }
 
         }//end request register

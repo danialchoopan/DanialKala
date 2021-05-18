@@ -19,9 +19,10 @@ class UserAddressRecyclerAdapter(val m_context: Context) :
     RecyclerView.Adapter<UserAddressRecyclerAdapter.ViewHolder>() {
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
-    var ar_data = emptyList<UserAddressDataModelItem>()
+    var ar_data = ArrayList<UserAddressDataModelItem>()
     fun setData(ar_data: ArrayList<UserAddressDataModelItem>) {
         this.ar_data = ar_data
+        notifyDataSetChanged()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
@@ -32,12 +33,12 @@ class UserAddressRecyclerAdapter(val m_context: Context) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userAddressItem = ar_data[position]
-        holder.view.item_user_address_state.text = userAddressItem.state_name
-        holder.view.item_user_address_city.text = userAddressItem.city_name
-        holder.view.item_user_address_address.text = userAddressItem.address
-        holder.view.item_user_address_post_code.text = userAddressItem.post_code
-        holder.view.item_user_address_phone.text = userAddressItem.addess_phone
-        holder.view.item_user_address_telphone.text = userAddressItem.lanline_phone
+        holder.view.item_user_address_state.text = "استان : "+userAddressItem.state_name
+        holder.view.item_user_address_city.text = "شهر : "+userAddressItem.city_name
+        holder.view.item_user_address_address.text = "آدرس : "+userAddressItem.address
+        holder.view.item_user_address_post_code.text = "کدپستی : "+userAddressItem.post_code
+        holder.view.item_user_address_phone.text = "شماره همراه : "+userAddressItem.addess_phone
+        holder.view.item_user_address_telphone.text = "تلفن : "+userAddressItem.lanline_phone
 
         //api user address
         val userAddressVolleyRequest = UserAddressVolleyRequest(m_context)
@@ -57,6 +58,7 @@ class UserAddressRecyclerAdapter(val m_context: Context) :
                                 "آدرس مورد نظر شما با موفقیت حدف شد",
                                 Toast.LENGTH_SHORT
                             ).show()
+                            notifyItemRemoved(position)
                         } else {
                             Toast.makeText(
                                 m_context,
@@ -66,7 +68,7 @@ class UserAddressRecyclerAdapter(val m_context: Context) :
                         }
                     }//end delete user address
                 }//btn positive
-            }//end alert
+            }.show()//end alert
         }//end btn img
         //img btn edit
         holder.view.item_user_address_img_edit.setOnClickListener {

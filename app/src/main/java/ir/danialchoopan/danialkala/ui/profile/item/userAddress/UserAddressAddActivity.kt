@@ -21,6 +21,7 @@ class UserAddressAddActivity : AppCompatActivity() {
     lateinit var ar_statesRequestDataModel: StatesRequestDataModel
     lateinit var ar_city_statesRequestDataModel: StatesRequestDataModel
     var dataReceived = false
+    var address_city_enable = false
     var address_city_id = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -105,6 +106,7 @@ class UserAddressAddActivity : AppCompatActivity() {
             ) {
                 if (dataReceived) {
                     address_city_id = ar_city_statesRequestDataModel[position].idcity
+                    address_city_enable = true
                 }
             }
 
@@ -116,8 +118,12 @@ class UserAddressAddActivity : AppCompatActivity() {
         //send data
 
         btn_add_address.setOnClickListener {
-            val state_name = address_state_spinner.selectedItem.toString()
-            val city_name = address_city_spinner.selectedItem.toString()
+            var state_name = ""
+            var city_name = ""
+            if (address_city_enable) {
+                state_name = address_state_spinner.selectedItem.toString()
+                city_name = address_city_spinner.selectedItem.toString()
+            }
             val city_code = address_city_id.toString()
             val lanline = layoutEtxt_lanline_phone.editText!!.text.toString()
             val post_code = layoutEtxt_post_code.editText!!.text.toString()

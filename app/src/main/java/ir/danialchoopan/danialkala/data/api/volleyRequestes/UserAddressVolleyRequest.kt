@@ -54,7 +54,6 @@ class UserAddressVolleyRequest(val m_context: Context) {
         VolleySingleTon.getInstance(m_context).addToRequestQueue(str_request)
     }
 
-
     fun updateUserAddress(
         idUserAddressItem: String,
         state_name: String,
@@ -109,7 +108,7 @@ class UserAddressVolleyRequest(val m_context: Context) {
                 try {
                     val gsonUserAddressDataModel =
                         Gson().fromJson(str_response, UserAddressDataModel::class.java)
-                    resultRequest(false, gsonUserAddressDataModel)
+                    resultRequest(true, gsonUserAddressDataModel)
                 } catch (e: Exception) {
                     resultRequest(false, UserAddressDataModel())
                 }
@@ -140,7 +139,7 @@ class UserAddressVolleyRequest(val m_context: Context) {
                 try {
                     val gsonUserAddressDataModelItem =
                         Gson().fromJson(str_response, UserAddressDataModelItem::class.java)
-                    resultRequest(false, gsonUserAddressDataModelItem)
+                    resultRequest(true, gsonUserAddressDataModelItem)
                 } catch (e: Exception) {
                     resultRequest(
                         false, UserAddressDataModelItem(

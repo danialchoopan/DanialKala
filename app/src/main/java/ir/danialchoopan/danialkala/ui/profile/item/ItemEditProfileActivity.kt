@@ -7,12 +7,15 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import ir.danialchoopan.danialkala.R
+import ir.danialchoopan.danialkala.data.UserSharePreferences
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.auth.AuthUserVolleyRequest
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.state.ShowStatesVolleyRequest
 import ir.danialchoopan.danialkala.data.model.requests.stetes.StatesRequestDataModel
 import ir.danialchoopan.danialkala.dialog.LoadingProcessDialog
+import ir.danialchoopan.danialkala.utails.UpdateUserInfoShareInfo
 import kotlinx.android.synthetic.main.activity_item_edit_profile.*
 import kotlinx.android.synthetic.main.activity_user_address_add.*
+import kotlinx.android.synthetic.main.activity_user_address_update.*
 import kotlinx.android.synthetic.main.toolbar_auth_user_activities.*
 
 class ItemEditProfileActivity : AppCompatActivity() {
@@ -20,9 +23,13 @@ class ItemEditProfileActivity : AppCompatActivity() {
     lateinit var ar_city_statesRequestDataModel: StatesRequestDataModel
     var dataReceived = false
     var address_city_id = 0
+    var address_city_enable = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        //update user info
+        UpdateUserInfoShareInfo(this@ItemEditProfileActivity).instance()
+        //end update user info
         setContentView(R.layout.activity_item_edit_profile)
         val loadingProcessDialog_loadUserInfo = LoadingProcessDialog(this).create()
         //toolbar
@@ -118,6 +125,7 @@ class ItemEditProfileActivity : AppCompatActivity() {
                 ) {
                     if (dataReceived) {
                         address_city_id = ar_city_statesRequestDataModel[position].idcity
+                        address_city_enable = true
                     }
                 }
 
@@ -128,7 +136,59 @@ class ItemEditProfileActivity : AppCompatActivity() {
 
 
         btn_save_edit_user_info.setOnClickListener {
+            if (validateAddressInput()) {
+                val loadingDialogUpdateUserInfo =
+                    LoadingProcessDialog(this@ItemEditProfileActivity).create()
+                loadingDialogUpdateUserInfo.show()
+                var state_name = ""
+                var city_name = ""
+                if (address_city_enable) {
+                    state_name = edit_profile_spinner_states.selectedItem.toString()
+                    city_name = edit_profile_spinner_cities.selectedItem.toString()
+                }
+                val city_code = address_city_id.toString()
 
+
+                val user_name = edit_profile_layoutEtxt_name.editText!!.text.toString()
+                val phone = edit_profile_layoutEtxt_phone.editText!!.text.toString()
+                val national_code = edit_profile_layoutEtxt_national_code.editText!!.text.toString()
+                val userSharePreferences =
+                    UserSharePreferences(this@ItemEditProfileActivity).sharePreferences
+                authUserVolleyRequest.updateUserData(
+                    user_name,
+                    phone,
+                    national_code,
+                    state_name,
+                    city_name,
+                    city_code
+                ) { editProfileDataModelRequest ->
+                    loadingDialogUpdateUserInfo.dismiss()
+                    if (editProfileDataModelRequest.success) {
+                        userSharePreferences.edit().also { editor ->
+                            editor.putString("name", editProfileDataModelRequest.user.name)
+                            editor.putString("phone", editProfileDataModelRequest.user.phone)
+                        }.apply()
+                        this@ItemEditProfileActivity.finish()
+                        Toast.makeText(
+                            this@ItemEditProfileActivity,
+                            "اطلاعات شما با موفقیت بروز شد.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else {
+                        Toast.makeText(
+                            this@ItemEditProfileActivity,
+                            "مشکلی پش آمده است لطفا بعدا دوباره امتحان کنید",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    }
+                }
+            } else {
+                Toast.makeText(
+                    this@ItemEditProfileActivity,
+                    "لطفا فیلد های ضروری را پر کنید",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
 
     }

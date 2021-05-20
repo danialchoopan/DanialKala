@@ -11,10 +11,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
         android:theme="@style/Theme.DanialKala">
-        <activity android:name=".ui.profile.item.favoriteProduct.FavoriteProductIndexActivity"></activity>
+        <activity android:name=".ui.cart.UserCartActivity"></activity>
+        <activity android:name=".ui.profile.item.favoriteProduct.FavoriteProductIndexActivity" />
         <activity android:name=".ui.profile.item.user.ChangeUserPasswordActivity" />
         <activity android:name=".ui.profile.item.userAddress.UserAddressUpdateActivity" />
-        <activity android:name=".ui.profile.item.userAddress.UserAddressAddActivity"></activity>
+        <activity android:name=".ui.profile.item.userAddress.UserAddressAddActivity" />
         <activity android:name=".ui.profile.item.userAddress.UserAddressIndexActivity" />
         <activity android:name=".ui.profile.item.ItemEditProfileActivity" />
         <activity android:name=".ui.profile.UserProfileActivity" />

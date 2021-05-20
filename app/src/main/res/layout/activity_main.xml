@@ -30,7 +30,7 @@
                     android:layout_height="wrap_content"
                     android:layout_alignParentRight="true"
                     android:layout_centerInParent="true"
-                    android:layout_marginRight="20dp"
+                    android:layout_marginRight="10dp"
                     android:fontFamily="@font/vazir"
                     android:text="@string/app_name"
                     android:textColor="@color/white"
@@ -38,12 +38,45 @@
 
                 <ImageButton
                     android:id="@+id/toolbar_img_btn_search_icon"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
                     android:layout_centerVertical="true"
                     android:background="@android:color/transparent"
                     android:scaleType="fitXY"
                     android:src="@drawable/ic_baseline_search_24" />
+
+                <LinearLayout
+                    android:id="@+id/main_layout_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:layout_toRightOf="@id/toolbar_img_btn_search_icon">
+
+                <ImageButton
+                    android:id="@+id/toolbar_img_btn_user_cart"
+                    android:layout_width="35dp"
+                    android:layout_height="35dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="10dp"
+                    android:layout_toRightOf="@id/toolbar_img_btn_search_icon"
+                    android:background="@android:color/transparent"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/ic_baseline_shopping_cart_24"
+                    android:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/toolbar_img_btn_user_cart_tv_count"
+                    android:layout_toRightOf="@id/toolbar_img_btn_user_cart"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:text="0"
+                    android:layout_marginLeft="-5dp"
+                    android:textColor="@color/white" />
+                </LinearLayout>
+
+
+
             </RelativeLayout>
         </androidx.appcompat.widget.Toolbar>
 
@@ -96,8 +129,8 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         app:headerLayout="@layout/header_main_navigation_menu"
-        app:menu="@menu/main_navigation_menu"
         app:itemTextAppearance="@style/NavigationViewStyle"
+        app:menu="@menu/main_navigation_menu"
 
         />
 </androidx.drawerlayout.widget.DrawerLayout>

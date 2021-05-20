@@ -12,9 +12,10 @@ import ir.danialchoopan.danialkala.R
 import ir.danialchoopan.danialkala.data.api.EndPoints
 import ir.danialchoopan.danialkala.data.model.requests.home.Home_slider
 import ir.danialchoopan.danialkala.data.model.requests.home.Productphotos
+import ir.danialchoopan.danialkala.data.model.requests.singleProduct.Productphoto
 import kotlinx.android.synthetic.main.row_img_slider_item.view.*
 
-class ImgSliderProductViewPagerAdapter(val m_context: Context, val ar_data: List<Productphotos>) :
+class ImgSliderProductViewPagerAdapter(val m_context: Context, val ar_data: List<Productphoto>) :
     PagerAdapter() {
     override fun getCount(): Int = ar_data.size
 

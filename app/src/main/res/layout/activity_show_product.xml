@@ -18,8 +18,12 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
-
+            <LinearLayout
+                android:id="@+id/show_product_cart_layout"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent">
             <ImageView
+                android:id="@+id/show_product_open_cart"
                 android:layout_width="35dp"
                 android:layout_height="match_parent"
                 android:layout_centerVertical="true"
@@ -29,6 +33,17 @@
                 android:scaleType="fitCenter"
                 android:src="@drawable/ic_baseline_shopping_cart_24"
                 app:tint="@color/white" />
+
+            <TextView
+                android:id="@+id/show_product_open_cart_tv_count"
+                android:layout_toRightOf="@id/show_product_open_cart"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:layout_marginLeft="-5dp"
+                android:text="0"
+                android:textColor="@color/white" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/product_show_lbl_title_toolbar_product"
@@ -62,6 +77,7 @@
         android:id="@+id/show_product_scrollView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:overScrollMode="never"
         android:scrollbars="none">
 
         <LinearLayout
@@ -96,6 +112,18 @@
                     android:text="توضیحات محصولات"
                     android:textSize="18sp" />
 
+                <TextView
+                    android:id="@+id/show_p_lbl_product_price"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:fontFamily="@font/vazir"
+                    android:gravity="left"
+                    android:padding="5dp"
+                    android:text="85,000 تومان"
+                    android:textColor="@color/many_color"
+                    android:textSize="20sp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -106,18 +134,18 @@
                         android:layout_width="70dp"
                         android:layout_height="match_parent"
                         android:padding="8dp"
-                        app:srcCompat="@drawable/ic_baseline_favorite_border_24"
-                        android:visibility="gone"/>
+                        android:visibility="gone"
+                        app:srcCompat="@drawable/ic_baseline_favorite_border_24" />
 
                     <ProgressBar
                         android:id="@+id/show_product_favorite_img_progress_bar"
                         android:layout_width="70dp"
                         android:layout_height="match_parent"
-                        android:padding="10dp"
-                        />
+                        android:padding="10dp" />
 
 
                     <Button
+                        android:id="@+id/show_product_add_cart"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
@@ -129,8 +157,26 @@
                         android:text="افزودن به سبد خرید"
                         android:textSize="16dp" />
 
+                    <ProgressBar
+                        android:id="@+id/show_product_add_cart_progressBar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:padding="10dp"
+                        android:visibility="gone" />
+
 
                 </LinearLayout>
+
+                <TextView
+                    android:id="@+id/show_product_card_added"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/vazir"
+                    android:paddingLeft="20dp"
+                    android:paddingRight="20dp"
+                    android:text="این محصول به سبد خرید شما قبلا اضافه شده است"
+                    android:visibility="gone" />
 
                 <LinearLayout
                     android:layout_width="match_parent"

@@ -59,6 +59,8 @@ class UserAddressRecyclerAdapter(val m_context: Context) :
                                 Toast.LENGTH_SHORT
                             ).show()
                             notifyItemRemoved(position)
+                            notifyItemRangeChanged(position, ar_data.size)
+
                         } else {
                             Toast.makeText(
                                 m_context,

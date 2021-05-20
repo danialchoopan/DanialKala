@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.row_product_home.view.*
 
 import ir.danialchoopan.danialkala.data.model.requests.home.New_products
 import ir.danialchoopan.danialkala.data.model.requests.showCategory.Products
+import ir.danialchoopan.danialkala.utails.FormatNumbers
 
 class ShowProductCardRecyclerViewAdapter(val context: Context) :
     RecyclerView.Adapter<ShowProductCardRecyclerViewAdapter.ViewHolder>() {
@@ -30,14 +31,14 @@ class ShowProductCardRecyclerViewAdapter(val context: Context) :
         val productItem = listData[position]
         holder.view.row_lblProductName.text = productItem.name
         holder.view.row_lblProductCategory.text = productItem.category
-        holder.view.row_lblProductPrice.text = productItem.price.toString() + "تومان"
+        holder.view.row_lblProductPrice.text = FormatNumbers.formatPrice(productItem.price.toString()) + "تومان"
         //load img
         Picasso.get().load(EndPoints.storageImg + productItem.thumbnail)
             .into(holder.view.row_imgProduct)
 
         holder.view.setOnClickListener {
             Intent(context, ShowProductActivity::class.java).also { intent ->
-                intent.putExtra("productItem", productItem)
+                intent.putExtra("productId", productItem.id)
                 context.startActivity(intent)
             }
         }

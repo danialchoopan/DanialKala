@@ -14,14 +14,6 @@
     </group>
 
     <group android:checkableBehavior="single"
-        android:id="@+id/group2">
-        <item
-            android:id="@+id/navigation_menu_item_shopping_cart"
-            android:icon="@drawable/ic_baseline_shopping_cart_24"
-            android:title="سبد خرید" />
-    </group>
-
-    <group android:checkableBehavior="single"
         android:id="@+id/group3">
         <item
             android:id="@+id/navigation_menu_item_special_offer"

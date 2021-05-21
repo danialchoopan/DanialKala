@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_show_product.*
 
 class ShowProductActivity : AppCompatActivity() {
+    lateinit var userSharePreferences: UserSharePreferences
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_product)
@@ -33,6 +34,7 @@ class ShowProductActivity : AppCompatActivity() {
             finish()
         }
         val favoriteProductVolleyRequest = FavoriteProductVolleyRequest(this@ShowProductActivity)
+        userSharePreferences = UserSharePreferences(this@ShowProductActivity)
         //get product item
         val productId = intent.extras!!.getInt("productId")
         //show loading dialog
@@ -44,17 +46,6 @@ class ShowProductActivity : AppCompatActivity() {
             loadingDialogShowProduct.dismiss()
             if (success) {
                 //start if
-
-                val authUserVolleyRequest = AuthUserVolleyRequest(this@ShowProductActivity)
-                authUserVolleyRequest.checkToken { successToken ->
-                    if (!successToken) {
-                        UserSharePreferences(this@ShowProductActivity).sharePreferences.edit()
-                            .clear().apply()
-                        show_product_cart_layout.visibility = View.GONE
-                    } else {
-                        show_product_cart_layout.visibility = View.VISIBLE
-                    }
-                }//end check token
                 val cartVolleyRequest = CartVolleyRequest(this@ShowProductActivity)
                 cartVolleyRequest.checkIfProductInUserCart(productId.toString()) { successCart ->
                     if (successCart) {
@@ -198,5 +189,19 @@ class ShowProductActivity : AppCompatActivity() {
                 finish()
             }
         }
+    }
+
+
+    override fun onResume() {
+        super.onResume()
+
+        if (userSharePreferences.sharePreferences.contains("token")) {
+            show_product_user_cart_items.visibility = View.VISIBLE
+            show_product_cart_layout.visibility = View.VISIBLE
+        } else {
+            show_product_user_cart_items.visibility = View.GONE
+            show_product_cart_layout.visibility = View.GONE
+        }
+
     }
 }

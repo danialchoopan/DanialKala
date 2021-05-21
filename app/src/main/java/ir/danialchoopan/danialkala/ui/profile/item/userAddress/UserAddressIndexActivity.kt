@@ -3,6 +3,7 @@ package ir.danialchoopan.danialkala.ui.profile.item.userAddress
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.danialchoopan.danialkala.R
@@ -13,7 +14,7 @@ import kotlinx.android.synthetic.main.activity_user_address_index.*
 import kotlinx.android.synthetic.main.toolbar_auth_user_activities.*
 
 class UserAddressIndexActivity : AppCompatActivity() {
-    lateinit var userAddressRecyclerAdapter:UserAddressRecyclerAdapter
+    lateinit var userAddressRecyclerAdapter: UserAddressRecyclerAdapter
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_address_index)
@@ -50,6 +51,11 @@ class UserAddressIndexActivity : AppCompatActivity() {
         val loadingProcessDialog = LoadingProcessDialog(this).create()
         loadingProcessDialog.show()
         userAddressVolleyRequest.readUserAddress { success, userAddress ->
+            if (userAddress.size == 0) {
+                user_address_empty_address.visibility = View.VISIBLE
+            }else{
+                user_address_empty_address.visibility = View.GONE
+            }
             loadingProcessDialog.dismiss()
             if (success) {
                 userAddressRecyclerAdapter.setData(userAddress)

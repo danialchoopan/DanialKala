@@ -35,7 +35,6 @@ class PhoneVerifyActivity : AppCompatActivity() {
         authUserVolleyRequest = AuthUserVolleyRequest(this@PhoneVerifyActivity)
         checkIfphoneVerified()
         //end check if user phone number verified
-        setContentView(R.layout.activity_phone_varify)
         //close btn
         toolbar_auth_close.setOnClickListener {
             finish()

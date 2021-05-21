@@ -18,31 +18,33 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <LinearLayout
                 android:id="@+id/show_product_cart_layout"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent">
-            <ImageView
-                android:id="@+id/show_product_open_cart"
-                android:layout_width="35dp"
-                android:layout_height="match_parent"
-                android:layout_centerVertical="true"
-                android:layout_margin="5dp"
-                android:layout_marginStart="10dp"
-                android:padding="1dp"
-                android:scaleType="fitCenter"
-                android:src="@drawable/ic_baseline_shopping_cart_24"
-                app:tint="@color/white" />
 
-            <TextView
-                android:id="@+id/show_product_open_cart_tv_count"
-                android:layout_toRightOf="@id/show_product_open_cart"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:layout_marginLeft="-5dp"
-                android:text="0"
-                android:textColor="@color/white" />
+                <ImageView
+                    android:id="@+id/show_product_open_cart"
+                    android:layout_width="35dp"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="5dp"
+                    android:layout_marginStart="10dp"
+                    android:padding="1dp"
+                    android:scaleType="fitCenter"
+                    android:src="@drawable/ic_baseline_shopping_cart_24"
+                    app:tint="@color/white" />
+
+                <TextView
+                    android:id="@+id/show_product_open_cart_tv_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="-5dp"
+                    android:layout_toRightOf="@id/show_product_open_cart"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@color/white" />
             </LinearLayout>
 
             <TextView
@@ -125,6 +127,7 @@
                     android:textSize="20sp" />
 
                 <LinearLayout
+                    android:id="@+id/show_product_user_cart_items"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="horizontal">
@@ -192,7 +195,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -201,6 +205,12 @@
                                 android:text="نظرات کاربران"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_marginLeft="15dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_baseline_supervisor_account_24" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
 
@@ -214,7 +224,8 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:gravity="center">
+                            android:gravity="center"
+                            android:orientation="horizontal">
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -223,6 +234,12 @@
                                 android:text="مشخصات"
                                 android:textColor="@color/black"
                                 android:textSize="16sp" />
+
+                            <ImageView
+                                android:layout_marginLeft="15dp"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:src="@drawable/ic_baseline_format_list_bulleted_24" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </LinearLayout>

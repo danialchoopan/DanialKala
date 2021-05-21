@@ -39,37 +39,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        authUserVolleyRequest = AuthUserVolleyRequest(this@MainActivity)
-        authUserVolleyRequest.checkToken { success ->
-            if (!success) {
-                UserSharePreferences(this@MainActivity).sharePreferences.edit().clear().apply()
-                Toast.makeText(this@MainActivity, "ورود شما منفضی شده است", Toast.LENGTH_SHORT)
-                    .show()
-                main_layout_cart.visibility = View.GONE
-            } else {
-                authUserVolleyRequest.checkIfPhoneVerified { verified ->
-                    if (!verified) {
-                        UserSharePreferences(this@MainActivity).sharePreferences.edit().clear()
-                            .apply()
-                        Toast.makeText(
-                            this@MainActivity,
-                            "ورود شما منفضی شده است",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-                        Toast.makeText(
-                            this@MainActivity,
-                            "لطفا شماره همراه خود را تایید کنید",
-                            Toast.LENGTH_SHORT
-                        )
-                            .show()
-
-                        main_layout_cart.visibility = View.GONE
-                    }
-                }
-            }
-        }//end check token
         userSharePreferences = UserSharePreferences(this@MainActivity).sharePreferences
+        authUserVolleyRequest = AuthUserVolleyRequest(this@MainActivity)
+
         //set toolbar and navigation menu
         setSupportActionBar(toolbar_main_activity)
         supportActionBar!!.setDisplayShowTitleEnabled(true)
@@ -98,9 +70,8 @@ class MainActivity : AppCompatActivity() {
 //        }
         //end set nav menu font family
 
-
         //set recycler adapters
-        val rycAdapterCategories = RecyclerViewCategoryProductHome()
+        val rycAdapterCategories = RecyclerViewCategoryProductHome(this@MainActivity)
         rycCategories.layoutManager =
             StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.HORIZONTAL)
         rycCategories.adapter = rycAdapterCategories
@@ -184,13 +155,31 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-        authUserVolleyRequest.checkToken { success ->
-            if (!success) {
-                UserSharePreferences(this@MainActivity).sharePreferences.edit().clear().apply()
-                main_layout_cart.visibility = View.GONE
-            } else {
-                main_layout_cart.visibility = View.VISIBLE
-            }
-        }//end check token
+
+        if (userSharePreferences.contains("token")) {
+            authUserVolleyRequest.checkToken { success ->
+                if (success) {
+                    authUserVolleyRequest.checkIfPhoneVerified { verified ->
+                        if (!verified) {
+                            UserSharePreferences(this@MainActivity).sharePreferences.edit().clear()
+                                .apply()
+                            main_layout_cart.visibility = View.GONE
+                        }
+                    }
+
+                } else {
+                    UserSharePreferences(this@MainActivity).sharePreferences.edit().clear().apply()
+                    Toast.makeText(this@MainActivity, "ورود شما منفضی شده است", Toast.LENGTH_SHORT)
+                        .show()
+
+                    main_layout_cart.visibility = View.GONE
+                }
+            }//end check token
+        } else {
+            main_layout_cart.visibility = View.GONE
+        }
+
+
+
     }
 }

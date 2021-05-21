@@ -4,45 +4,37 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.profile.item.userAddress.UserAddressIndexActivity">
+    android:orientation="vertical"
+    tools:context=".ui.subCategory.ShowSubCategoryActivity">
 
     <include
-        android:id="@+id/include2"
+        android:id="@+id/include5"
         layout="@layout/toolbar_auth_user_activities"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fbtn_AddAddress"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
-        android:layout_marginBottom="16dp"
-        android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/ic_baseline_add_24" />
-
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rcy_userAddress"
+        android:id="@+id/rcy_sub_category"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/include2" />
+        app:layout_constraintTop_toBottomOf="@+id/include5" />
 
     <TextView
-        android:id="@+id/user_address_empty_address"
+        android:id="@+id/category_tv_empty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/vazir"
-        android:text="آدرس جهت نمایش وحود ندارد"
+        android:text="دسته بندی جهت نمایش وجود ندارد"
         android:textSize="16sp"
         android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="@+id/rcy_userAddress"
-        app:layout_constraintEnd_toEndOf="@+id/rcy_userAddress"
-        app:layout_constraintStart_toStartOf="@+id/rcy_userAddress"
-        app:layout_constraintTop_toBottomOf="@+id/include2" />
+        app:layout_constraintBottom_toBottomOf="@+id/rcy_sub_category"
+        app:layout_constraintEnd_toEndOf="@+id/rcy_sub_category"
+        app:layout_constraintStart_toStartOf="@+id/rcy_sub_category"
+        app:layout_constraintTop_toTopOf="@+id/rcy_sub_category" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -44,7 +44,8 @@ class FavoriteProductRecyclerViewAdapter(val m_context: Context) :
             favoriteProductVolleyRequest.likeProduct(favoriteProduct.id.toString()) {
 
             }
-            notifyItemChanged(position)
+            notifyItemRemoved(position)
+            notifyItemRangeChanged(position, ar_data.size - 1)
         }
     }
 

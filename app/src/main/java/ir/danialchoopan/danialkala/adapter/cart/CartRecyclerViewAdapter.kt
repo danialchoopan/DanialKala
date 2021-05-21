@@ -52,7 +52,7 @@ class CartRecyclerViewAdapter(private val m_context: Context) :
                     CartVolleyRequest(m_context).deleteCart(productItem.cart.id.toString()) { success ->
                         if (success) {
                             notifyItemRemoved(position)
-                            notifyItemRangeChanged(position, ar_data.size)
+                            notifyItemRangeChanged(position, ar_data.size-1)
                         }
                     }
                 }

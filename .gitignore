@@ -257,4 +257,4 @@ fabric.properties
 
 # End of https://www.toptal.com/developers/gitignore/api/windows,androidstudio,android,kotlin
 
-app/src/main/java/ir/danialchoopan/danialkala/data/api/EndPoints.kt
+app/src/main/java/ir/danialchoopan/danialkala/data/api/ApiDomain.kt

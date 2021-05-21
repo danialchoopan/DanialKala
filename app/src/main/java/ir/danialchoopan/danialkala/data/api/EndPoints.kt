@@ -1,23 +1,24 @@
 package ir.danialchoopan.danialkala.data.api
 
+
 object EndPoints {
-    const private val domain = "http://192.168.56.1:8000"
-    const val baseUrl = "$domain/api/"
-    const val storage = "$domain/storage/"
-    const val storageImg = "$domain/"
-    const val home = "${baseUrl}home"
-    const val category = "${baseUrl}category"
-    const val showCategory = "${baseUrl}categoryproduct/"
+    private val domain = ApiDomain.domain
+    val baseUrl = "$domain/api/"
+    val storage = "$domain/storage/"
+    val storageImg = "$domain/"
+    val home = "${baseUrl}home"
+    val category = "${baseUrl}category"
+    val showCategory = "${baseUrl}categoryproduct/"
 
     //auth routes
-    const val register = "${baseUrl}auth/user/register/"
-    const val login = "${baseUrl}auth/user/login/"
-    const val tokenCheck = "${baseUrl}auth/user/checkToken/"
-    const val getUserInfo = "${baseUrl}auth/user/getUserInfo/"
-    const val updateUserInfo = "${baseUrl}auth/user/updateUserInfo/"
-    const val checkVerifyPhone = "${baseUrl}auth/user/checkIfPhoneVerified/"
-    const val sendSmsVerifyUserCode = "${baseUrl}auth/user/sendVerifyPhoneSms/"
-    const val confirmVerifyPhoneSms = "${baseUrl}auth/user/confirmVerifyPhoneSms/"
+    val register = "${baseUrl}auth/user/register/"
+    val login = "${baseUrl}auth/user/login/"
+    val tokenCheck = "${baseUrl}auth/user/checkToken/"
+    val getUserInfo = "${baseUrl}auth/user/getUserInfo/"
+    val updateUserInfo = "${baseUrl}auth/user/updateUserInfo/"
+    val checkVerifyPhone = "${baseUrl}auth/user/checkIfPhoneVerified/"
+    val sendSmsVerifyUserCode = "${baseUrl}auth/user/sendVerifyPhoneSms/"
+    val confirmVerifyPhoneSms = "${baseUrl}auth/user/confirmVerifyPhoneSms/"
 
     //product
     val showProduct = "${baseUrl}product/"
@@ -36,8 +37,6 @@ object EndPoints {
     //user address routes
     val userAddress = "${baseUrl}user/addess/"
 
-
-    //states
     val states = "${baseUrl}states/"
     //end states
 

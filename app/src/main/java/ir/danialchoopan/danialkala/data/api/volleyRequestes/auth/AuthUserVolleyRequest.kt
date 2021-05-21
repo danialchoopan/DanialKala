@@ -30,6 +30,7 @@ class AuthUserVolleyRequest(private val m_context: Context) {
                         Gson().fromJson(strResponse, RegisterUserDataModel::class.java)
                     resultRequest(true, registerResult)
                     userSharePreferences.sharePreferences.edit().also {
+                        it.putInt("id", registerResult.user.id)
                         it.putString("token", registerResult.token)
                         it.putString("name", registerResult.user.name)
                         it.putString("email", registerResult.user.email)
@@ -91,6 +92,7 @@ class AuthUserVolleyRequest(private val m_context: Context) {
                     //if user verify his phone number remember the user
                     if (registerResult.user.phone_verified != "0") {
                         userSharePreferences.sharePreferences.edit().also {
+                            it.putInt("id", registerResult.user.id)
                             it.putString("token", registerResult.token)
                             it.putString("name", registerResult.user.name)
                             it.putString("email", registerResult.user.email)

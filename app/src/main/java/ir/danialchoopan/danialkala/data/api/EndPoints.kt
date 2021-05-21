@@ -22,6 +22,9 @@ object EndPoints {
     //product
     val showProduct = "${baseUrl}product/"
 
+    //product comment
+    val productComment = "${baseUrl}product/comment/"
+
     val subCategory = "${baseUrl}subCategory/"
 
     //user cart

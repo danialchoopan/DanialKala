@@ -54,6 +54,7 @@ class UserLoginActivity : AppCompatActivity() {
                             this@UserLoginActivity,
                             PhoneVerifyActivity::class.java
                         ).also { intent ->
+                            intent.putExtra("intentUserId", loginUserDataModel.user.id)
                             intent.putExtra("intentUserToken", loginUserDataModel.token)
                             intent.putExtra("intentUserName", loginUserDataModel.user.name)
                             intent.putExtra("intentUserEmail", loginUserDataModel.user.email)

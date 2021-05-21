@@ -19,6 +19,7 @@ import ir.danialchoopan.danialkala.data.model.requests.home.New_products
 import ir.danialchoopan.danialkala.data.model.requests.showCategory.Products
 import ir.danialchoopan.danialkala.dialog.LoadingProcessDialog
 import ir.danialchoopan.danialkala.ui.cart.UserCartActivity
+import ir.danialchoopan.danialkala.ui.product.comment.ProductCommentActivity
 import ir.danialchoopan.danialkala.ui.showProductsProperties.ShowProductsPropertiesActivity
 import ir.danialchoopan.danialkala.utails.FormatNumbers
 import kotlinx.android.synthetic.main.activity_main.*
@@ -45,6 +46,16 @@ class ShowProductActivity : AppCompatActivity() {
         showSingleProductVolleyRequest.getProductById(productId.toString()) { success, productItem ->
             loadingDialogShowProduct.dismiss()
             if (success) {
+                //open product comment
+                show_product_card_user_comments.setOnClickListener {
+                    Intent(
+                        this@ShowProductActivity,
+                        ProductCommentActivity::class.java
+                    ).also { intent ->
+                        intent.putExtra("productId", productItem.id)
+                        startActivity(intent)
+                    }
+                }
                 //start if
                 val cartVolleyRequest = CartVolleyRequest(this@ShowProductActivity)
                 cartVolleyRequest.checkIfProductInUserCart(productId.toString()) { successCart ->

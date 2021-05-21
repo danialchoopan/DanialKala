@@ -6,4 +6,70 @@
     android:layout_height="match_parent"
     tools:context=".ui.product.comment.ProductCommentActivity">
 
+    <include
+        android:id="@+id/include6"
+        layout="@layout/toolbar_auth_user_activities"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rcy_product_comment"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include6" />
+
+    <LinearLayout
+        android:id="@+id/linearLayout3"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent">
+
+        <EditText
+            android:id="@+id/p_comment_etxt_comment"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:ems="10"
+            android:fontFamily="@font/vazir"
+            android:hint="نظر"
+            android:inputType="textPersonName" />
+
+        <ImageButton
+            android:id="@+id/p_comment_img_btn_send"
+            android:layout_width="80dp"
+            android:layout_height="50dp"
+            android:background="@android:color/transparent"
+            android:padding="5dp"
+            android:scaleType="fitCenter"
+            android:visibility="visible"
+            app:srcCompat="@drawable/ic_baseline_send_24" />
+
+        <ProgressBar
+            android:id="@+id/p_comment_progress"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/p_comment_empty_commnet"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/vazir"
+        android:text="نظری جهت نمایش وحود ندارد"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/rcy_product_comment"
+        app:layout_constraintEnd_toEndOf="@+id/rcy_product_comment"
+        app:layout_constraintStart_toStartOf="@+id/rcy_product_comment"
+        app:layout_constraintTop_toBottomOf="@+id/include6" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

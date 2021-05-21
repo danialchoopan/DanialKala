@@ -36,7 +36,7 @@ class UserRegisterActivity : AppCompatActivity() {
 
         //btn register user
         btn_register_user.setOnClickListener {
-            val loadingDialogRegister=LoadingProcessDialog(this@UserRegisterActivity).create()
+            val loadingDialogRegister = LoadingProcessDialog(this@UserRegisterActivity).create()
             loadingDialogRegister.show()
             val authUserRequest = AuthUserVolleyRequest(this@UserRegisterActivity)
             if (checkUserInputs()) {
@@ -62,6 +62,7 @@ class UserRegisterActivity : AppCompatActivity() {
                             this@UserRegisterActivity,
                             PhoneVerifyActivity::class.java
                         ).also { intent ->
+                            intent.putExtra("intentUserId", registerUserDataModel.user.id)
                             intent.putExtra("intentUserToken", registerUserDataModel.token)
                             intent.putExtra("intentUserName", registerUserDataModel.user.name)
                             intent.putExtra("intentUserEmail", registerUserDataModel.user.email)

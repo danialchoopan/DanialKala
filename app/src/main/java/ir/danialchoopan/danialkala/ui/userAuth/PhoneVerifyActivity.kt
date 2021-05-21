@@ -26,6 +26,7 @@ class PhoneVerifyActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         //get user info from intent
         intentUserToken = intent.extras!!.getString("intentUserToken", "")
+        val intentUserId = intent.extras!!.getInt("intentUserId", 0)
         val intentUserName = intent.extras!!.getString("intentUserName", "")
         val intentUserEmail = intent.extras!!.getString("intentUserEmail", "")
         val intentUserPhone = intent.extras!!.getString("intentUserPhone", "")
@@ -35,6 +36,7 @@ class PhoneVerifyActivity : AppCompatActivity() {
         authUserVolleyRequest = AuthUserVolleyRequest(this@PhoneVerifyActivity)
         checkIfphoneVerified()
         //end check if user phone number verified
+        setContentView(R.layout.activity_phone_varify)
         //close btn
         toolbar_auth_close.setOnClickListener {
             finish()
@@ -97,6 +99,7 @@ class PhoneVerifyActivity : AppCompatActivity() {
                 when (sendcode.response_code) {
                     201 -> {
                         userSharePreferences.sharePreferences.edit().also { share ->
+                            share.putInt("id", intentUserId)
                             share.putString("token", intentUserToken)
                             share.putString("name", intentUserName)
                             share.putString("email", intentUserEmail)

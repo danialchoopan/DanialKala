@@ -13,3 +13,4 @@
 .externalNativeBuild
 .cxx
 local.properties
+app/src/main/java/ir/danialchoopan/danialkala/data/api/EndPoints.kt

@@ -23,6 +23,9 @@ object EndPoints {
     //product
     val showProduct = "${baseUrl}product/"
 
+    //search product
+    val searchProduct = "${baseUrl}product/search/"
+
     //product comment
     val productComment = "${baseUrl}product/comment/"
 

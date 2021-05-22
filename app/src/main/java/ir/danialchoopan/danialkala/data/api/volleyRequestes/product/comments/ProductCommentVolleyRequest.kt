@@ -18,8 +18,7 @@ class ProductCommentVolleyRequest(private val m_context: Context) {
         productId: String,
         requestResult: (success: Boolean, productComment: ProductComment) -> Unit
     ) {
-        val str_request =
-            object : StringRequest(Request.Method.GET, EndPoints.productComment + productId,
+        val str_request = StringRequest(Request.Method.GET, EndPoints.productComment + productId,
                 { strResponse ->
                     try {
                         val productComment =
@@ -34,15 +33,7 @@ class ProductCommentVolleyRequest(private val m_context: Context) {
                 { error ->
                     error.printStackTrace()
                 }
-            ) {
-                override fun getHeaders(): MutableMap<String, String> {
-                    val token_access = userSharePreferences.getToken()
-                    val requestHeaders = HashMap<String, String>()
-                    requestHeaders["Authorization"] = "Bearer $token_access";
-                    return requestHeaders
-
-                }
-            }//end str request
+            )
         VolleySingleTon.getInstance(m_context).addToRequestQueue(str_request)
     }
 

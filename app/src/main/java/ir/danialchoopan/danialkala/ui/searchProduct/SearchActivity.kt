@@ -9,25 +9,48 @@ import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import androidx.core.widget.addTextChangedListener
+import androidx.recyclerview.widget.LinearLayoutManager
 import ir.danialchoopan.danialkala.R
+import ir.danialchoopan.danialkala.adapter.recyclerView.search.SearchProductRecyclerViewAdapter
+import ir.danialchoopan.danialkala.data.api.volleyRequestes.product.search.SearchProductVolleyRequest
+import ir.danialchoopan.danialkala.data.model.requests.searchProduct.SearchProductDataModel
 import kotlinx.android.synthetic.main.activity_search.*
 
 class SearchActivity : AppCompatActivity() {
+    lateinit var searchProductVolley: SearchProductVolleyRequest
     val SPEECH_SEARCH_REQUEST_CODE = 221
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_search)
-
+        searchProductVolley = SearchProductVolleyRequest(this@SearchActivity)
+        //setup recycler
+        val searchProductRecyclerViewAdapter = SearchProductRecyclerViewAdapter(this@SearchActivity)
+        p_search_rcy_product.layoutManager = LinearLayoutManager(this@SearchActivity)
+        p_search_rcy_product.adapter = searchProductRecyclerViewAdapter
         search_txt_text.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (start > 5) {
+                if (start > 3) {
                     search_imgBtnClose.visibility = View.VISIBLE
                     search_imgBtnMic.visibility = View.GONE
+                    p_search_empty_progressBar.visibility = View.VISIBLE
+                    // TODO("add 2s Runnable")
+                    searchProductVolley.query(search_txt_text.text.toString()) { success, productSearch ->
+                        p_search_empty_progressBar.visibility = View.GONE
+                        if (success) {
+                            searchProductRecyclerViewAdapter.setData(productSearch)
+                            if (productSearch.size == 0) {
+                                p_search_empty.visibility = View.VISIBLE
+                            } else {
+                                p_search_empty.visibility = View.GONE
+                            }
+                        }
+                    }
                 } else {
+                    searchProductRecyclerViewAdapter.setData(SearchProductDataModel())
                     search_imgBtnClose.visibility = View.GONE
                     search_imgBtnMic.visibility = View.VISIBLE
                 }

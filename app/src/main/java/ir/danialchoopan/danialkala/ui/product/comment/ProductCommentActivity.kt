@@ -12,6 +12,7 @@ import ir.danialchoopan.danialkala.data.api.volleyRequestes.category.CategoryVol
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.product.comments.ProductCommentVolleyRequest
 import ir.danialchoopan.danialkala.dialog.LoadingProcessDialog
 import kotlinx.android.synthetic.main.activity_product_comment.*
+import kotlinx.android.synthetic.main.activity_show_product.*
 import kotlinx.android.synthetic.main.toolbar_auth_user_activities.*
 
 class ProductCommentActivity : AppCompatActivity() {
@@ -22,6 +23,7 @@ class ProductCommentActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_product_comment)
+        userSharePreferences = UserSharePreferences(this@ProductCommentActivity)
         //get product id
         productId = intent.extras!!.getInt("productId").toString()
         //setup toolbar
@@ -66,6 +68,15 @@ class ProductCommentActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        if (userSharePreferences.sharePreferences.contains("token")) {
+            p_comment_layout_comment.visibility = View.VISIBLE
+        } else {
+            p_comment_layout_comment.visibility = View.GONE
         }
     }
 

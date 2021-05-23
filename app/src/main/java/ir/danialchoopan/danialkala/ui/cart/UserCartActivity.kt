@@ -2,6 +2,7 @@ package ir.danialchoopan.danialkala.ui.cart
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.recyclerview.widget.LinearLayoutManager
 import ir.danialchoopan.danialkala.R
@@ -29,6 +30,11 @@ class UserCartActivity : AppCompatActivity() {
         val cartVolleyRequest = CartVolleyRequest(this@UserCartActivity)
         cartVolleyRequest.userCart { success, userCart ->
             if (success) {
+                if (userCart.size == 0) {
+                    cart_tv_empty.visibility = View.VISIBLE
+                } else {
+                    cart_tv_empty.visibility = View.GONE
+                }
                 var sum_price = 0
                 userCart.forEach { item ->
                     sum_price += item.price.toInt()

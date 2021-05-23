@@ -72,4 +72,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/include4" />
+
+    <TextView
+        android:id="@+id/cart_tv_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/vazir"
+        android:text="محصولی جهت نمایش وجود ندارد"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@+id/linearLayout2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/cart_rcy_show_products_cart"
+        app:layout_constraintTop_toBottomOf="@+id/include4" />
 </androidx.constraintlayout.widget.ConstraintLayout>

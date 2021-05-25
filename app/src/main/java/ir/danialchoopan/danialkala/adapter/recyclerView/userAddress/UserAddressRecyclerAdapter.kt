@@ -15,7 +15,10 @@ import ir.danialchoopan.danialkala.data.model.requests.userAddress.UserAddressDa
 import ir.danialchoopan.danialkala.ui.profile.item.userAddress.UserAddressUpdateActivity
 import kotlinx.android.synthetic.main.item_rcy_user_address.view.*
 
-class UserAddressRecyclerAdapter(val m_context: Context) :
+class UserAddressRecyclerAdapter(
+    val m_context: Context,
+    val resultDeleteItem: () -> Unit
+) :
     RecyclerView.Adapter<UserAddressRecyclerAdapter.ViewHolder>() {
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
@@ -33,12 +36,12 @@ class UserAddressRecyclerAdapter(val m_context: Context) :
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val userAddressItem = ar_data[position]
-        holder.view.item_user_address_state.text = "استان : "+userAddressItem.state_name
-        holder.view.item_user_address_city.text = "شهر : "+userAddressItem.city_name
-        holder.view.item_user_address_address.text = "آدرس : "+userAddressItem.address
-        holder.view.item_user_address_post_code.text = "کدپستی : "+userAddressItem.post_code
-        holder.view.item_user_address_phone.text = "شماره همراه : "+userAddressItem.addess_phone
-        holder.view.item_user_address_telphone.text = "تلفن : "+userAddressItem.lanline_phone
+        holder.view.item_user_address_state.text = "استان : " + userAddressItem.state_name
+        holder.view.item_user_address_city.text = "شهر : " + userAddressItem.city_name
+        holder.view.item_user_address_address.text = "آدرس : " + userAddressItem.address
+        holder.view.item_user_address_post_code.text = "کدپستی : " + userAddressItem.post_code
+        holder.view.item_user_address_phone.text = "شماره همراه : " + userAddressItem.addess_phone
+        holder.view.item_user_address_telphone.text = "تلفن : " + userAddressItem.lanline_phone
 
         //api user address
         val userAddressVolleyRequest = UserAddressVolleyRequest(m_context)
@@ -58,8 +61,7 @@ class UserAddressRecyclerAdapter(val m_context: Context) :
                                 "آدرس مورد نظر شما با موفقیت حدف شد",
                                 Toast.LENGTH_SHORT
                             ).show()
-                            notifyItemRemoved(position)
-                            notifyItemRangeChanged(position, ar_data.size-1)
+                            resultDeleteItem()
 
                         } else {
                             Toast.makeText(

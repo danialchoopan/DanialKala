@@ -37,7 +37,6 @@ class SearchActivity : AppCompatActivity() {
                     search_imgBtnClose.visibility = View.VISIBLE
                     search_imgBtnMic.visibility = View.GONE
                     p_search_empty_progressBar.visibility = View.VISIBLE
-                    // TODO("add 2s Runnable")
                     searchProductVolley.query(search_txt_text.text.toString()) { success, productSearch ->
                         p_search_empty_progressBar.visibility = View.GONE
                         if (success) {

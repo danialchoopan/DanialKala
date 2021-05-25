@@ -52,6 +52,7 @@ class ProductCommentActivity : AppCompatActivity() {
                 p_comment_img_btn_send.visibility = View.GONE
                 p_comment_progress.visibility = View.VISIBLE
                 productCommentVolleyRequest.addProductComments(productId, comment_text) { success ->
+                    p_comment_etxt_comment.setText("")
                     p_comment_img_btn_send.visibility = View.VISIBLE
                     p_comment_progress.visibility = View.GONE
                     if (success) {

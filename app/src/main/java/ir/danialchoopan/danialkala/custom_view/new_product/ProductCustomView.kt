@@ -64,7 +64,12 @@ class ProductCustomView : RelativeLayout {
 
         //rcy adapter
         rcyProduct = view.rcyProduct
+    }
 
+    fun onMoreClickListener(result: () -> Unit) {
+        lblMoreProduct.setOnClickListener {
+            result()
+        }
     }
 
     fun setRecyclerViewAdapter() {

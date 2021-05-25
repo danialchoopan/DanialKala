@@ -1,5 +1,6 @@
 package ir.danialchoopan.danialkala.ui.profile.item
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -12,6 +13,7 @@ import ir.danialchoopan.danialkala.data.api.volleyRequestes.auth.AuthUserVolleyR
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.state.ShowStatesVolleyRequest
 import ir.danialchoopan.danialkala.data.model.requests.stetes.StatesRequestDataModel
 import ir.danialchoopan.danialkala.dialog.LoadingProcessDialog
+import ir.danialchoopan.danialkala.ui.profile.item.user.ChangeUserPasswordActivity
 import ir.danialchoopan.danialkala.utails.UpdateUserInfoShareInfo
 import kotlinx.android.synthetic.main.activity_item_edit_profile.*
 import kotlinx.android.synthetic.main.activity_user_address_add.*
@@ -188,6 +190,14 @@ class ItemEditProfileActivity : AppCompatActivity() {
                     "لطفا فیلد های ضروری را پر کنید",
                     Toast.LENGTH_SHORT
                 ).show()
+            }
+        }
+
+        btn_open_change_password.setOnClickListener {
+            Intent(
+                this@ItemEditProfileActivity,
+                ChangeUserPasswordActivity::class.java
+            ).also { intent ->
             }
         }
 

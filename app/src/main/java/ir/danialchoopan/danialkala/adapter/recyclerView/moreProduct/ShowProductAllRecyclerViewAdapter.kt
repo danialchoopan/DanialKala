@@ -1,4 +1,4 @@
-package ir.danialchoopan.danialkala.adapter.recyclerView
+package ir.danialchoopan.danialkala.adapter.recyclerView.moreProduct
 
 import android.content.Context
 import android.content.Intent
@@ -10,19 +10,19 @@ import com.squareup.picasso.Picasso
 import ir.danialchoopan.danialkala.R
 import ir.danialchoopan.danialkala.ui.product.ShowProductActivity
 import ir.danialchoopan.danialkala.data.api.EndPoints
+import ir.danialchoopan.danialkala.data.model.requests.moreProduct.MoreProductDataModel
+import ir.danialchoopan.danialkala.data.model.requests.moreProduct.MoreProductDataModelItem
 import kotlinx.android.synthetic.main.row_product_home.view.*
 
-import ir.danialchoopan.danialkala.data.model.requests.home.New_products
-import ir.danialchoopan.danialkala.data.model.requests.showCategory.Products
 import ir.danialchoopan.danialkala.utails.FormatNumbers
 
-class ShowProductCardRecyclerViewAdapter(
+class ShowProductAllRecyclerViewAdapter(
     val context: Context
 ) :
-    RecyclerView.Adapter<ShowProductCardRecyclerViewAdapter.ViewHolder>() {
+    RecyclerView.Adapter<ShowProductAllRecyclerViewAdapter.ViewHolder>() {
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
-    var listData = emptyList<Products>()
+    var listData = emptyList<MoreProductDataModelItem>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder =
         ViewHolder(
@@ -50,7 +50,7 @@ class ShowProductCardRecyclerViewAdapter(
 
     override fun getItemCount(): Int = listData.size
 
-    fun setData(list: List<Products>) {
+    fun setData(list: List<MoreProductDataModelItem>) {
         listData = list
         notifyDataSetChanged()
     }

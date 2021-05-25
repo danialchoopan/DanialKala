@@ -51,6 +51,7 @@
                         app:srcCompat="@drawable/ic_baseline_person_24" />
                 </LinearLayout>
 
+
                 <TextView
                     android:id="@+id/profile_tv_phone"
                     android:layout_width="wrap_content"
@@ -60,6 +61,64 @@
                     android:textColor="@color/white"
                     android:textSize="15sp"
                     tools:text="0911 111 1111" />
+            </LinearLayout>
+
+            <ProgressBar
+                android:id="@+id/profile_loading_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp" />
+
+            <LinearLayout
+                android:id="@+id/profile_validate_email_layout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/alert_warning"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:orientation="horizontal"
+                    android:padding="15dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/vazir"
+                        android:text="برای ثبت سفارش لطفا پست الکترونیکی خود را تایید کنید"
+                        android:textColor="#8C6C10" />
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_marginStart="10dp"
+                        android:src="@drawable/ic_baseline_warning_24" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/profile_btn_send_email"
+                    android:layout_width="200dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:background="@drawable/alert_warning"
+                    android:backgroundTint="#8C6C10"
+                    android:fontFamily="@font/vazir"
+                    android:gravity="center"
+                    android:padding="10dp"
+                    android:text="ارسال لینک تایید"
+                    android:textColor="@color/white" />
+
+                <ProgressBar
+                    android:id="@+id/profile_progress_bar_send_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="10dp"
+                    android:visibility="gone" />
             </LinearLayout>
 
 
@@ -123,7 +182,6 @@
             </androidx.cardview.widget.CardView>
 
 
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/profile_item_favorite_product"
                 android:layout_width="match_parent"
@@ -178,8 +236,7 @@
                         android:layout_width="40dp"
                         android:layout_height="match_parent"
                         android:padding="5dp"
-                        android:src="@drawable/ic_baseline_credit_card_24"
-                        />
+                        android:src="@drawable/ic_baseline_credit_card_24" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

@@ -25,7 +25,9 @@ class UserAddressIndexActivity : AppCompatActivity() {
         }
         //setup recycler view
         rcy_userAddress.layoutManager = LinearLayoutManager(this@UserAddressIndexActivity)
-        userAddressRecyclerAdapter = UserAddressRecyclerAdapter(this@UserAddressIndexActivity)
+        userAddressRecyclerAdapter = UserAddressRecyclerAdapter(this@UserAddressIndexActivity) {
+            readApiUserAddress()
+        }
         rcy_userAddress.adapter = userAddressRecyclerAdapter
         //fbtn for add user address activity
         fbtn_AddAddress.setOnClickListener {
@@ -53,7 +55,7 @@ class UserAddressIndexActivity : AppCompatActivity() {
         userAddressVolleyRequest.readUserAddress { success, userAddress ->
             if (userAddress.size == 0) {
                 user_address_empty_address.visibility = View.VISIBLE
-            }else{
+            } else {
                 user_address_empty_address.visibility = View.GONE
             }
             loadingProcessDialog.dismiss()

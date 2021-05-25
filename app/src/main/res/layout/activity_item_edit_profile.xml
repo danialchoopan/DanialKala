@@ -99,11 +99,24 @@
                 android:id="@+id/btn_save_edit_user_info"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="5dp"
+                android:layout_margin="6dp"
+                android:background="@color/blue_500"
                 android:fontFamily="@font/vazir"
                 android:padding="10dp"
                 android:text="ذخیره"
                 android:textSize="18sp" />
+
+            <Button
+                android:id="@+id/btn_open_change_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="6dp"
+                android:background="@color/blue_500"
+                android:fontFamily="@font/vazir"
+                android:text="تغییر رمز عبور"
+                android:padding="10dp"
+                android:textSize="18sp"
+                />
 
 
         </LinearLayout>

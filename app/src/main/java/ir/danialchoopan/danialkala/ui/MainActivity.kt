@@ -28,6 +28,7 @@ import ir.danialchoopan.danialkala.ui.cart.UserCartActivity
 import ir.danialchoopan.danialkala.ui.category.ProductCategoryActivity
 import ir.danialchoopan.danialkala.ui.profile.UserProfileActivity
 import ir.danialchoopan.danialkala.ui.searchProduct.SearchActivity
+import ir.danialchoopan.danialkala.ui.showAllProduct.MoreProductLayoutActivity
 import ir.danialchoopan.danialkala.ui.userAuth.UserRegisterActivity
 import ir.danialchoopan.danialkala.utails.CustomTypefaceSpan
 import kotlinx.android.synthetic.main.activity_main.*
@@ -53,22 +54,6 @@ class MainActivity : AppCompatActivity() {
         drawer_layout_main_activity.addDrawerListener(actionbarToggle)
         actionbarToggle.syncState()
         //end nav menu
-        //set font family nav menus
-//        val menu_item_nav = nav_menu_main_activity.menu
-//        for (i in 0 until menu_item_nav.size()) {
-//            val mi = menu_item_nav.getItem(i)
-//            if (mi.subMenu != null) {
-//                val subMenu: SubMenu = mi.subMenu
-//                if (subMenu.size() > 0) {
-//                    for (j in 0 until subMenu.size()) {
-//                        val subMenuItem = subMenu.getItem(j)
-//                        applyFontToMenuItem(subMenuItem)
-//                    }
-//                }
-//            }
-//            applyFontToMenuItem(mi)
-//        }
-        //end set nav menu font family
 
         //set recycler adapters
         val rycAdapterCategories = RecyclerViewCategoryProductHome(this@MainActivity)
@@ -79,6 +64,11 @@ class MainActivity : AppCompatActivity() {
         cProduct_new_products.inflateRecyclerViewProduct()
         cProduct_new_products.setRecyclerViewLayoutManager()
         cProduct_new_products.setRecyclerViewAdapter()
+        cProduct_new_products.onMoreClickListener {
+            Intent(this@MainActivity, MoreProductLayoutActivity::class.java).also { intent ->
+                startActivity(intent)
+            }
+        }
 
         //view model
         val viewModelHome = ViewModelProvider(this)[HomePageViewModel::class.java]
@@ -178,7 +168,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             main_layout_cart.visibility = View.GONE
         }
-
 
 
     }

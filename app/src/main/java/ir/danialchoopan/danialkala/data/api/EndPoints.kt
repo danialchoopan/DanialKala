@@ -20,8 +20,14 @@ object EndPoints {
     val sendSmsVerifyUserCode = "${baseUrl}auth/user/sendVerifyPhoneSms/"
     val confirmVerifyPhoneSms = "${baseUrl}auth/user/confirmVerifyPhoneSms/"
 
+    //email
+    val sendVerifyEmail = "${baseUrl}auth/user/sendVerifyEmail"
+
     //product
     val showProduct = "${baseUrl}product/"
+
+    //all product
+    val allProduct = "${baseUrl}show/all/product/"
 
     //search product
     val searchProduct = "${baseUrl}product/search/"

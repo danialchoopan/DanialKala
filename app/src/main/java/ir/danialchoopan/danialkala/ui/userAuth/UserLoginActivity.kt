@@ -13,8 +13,18 @@ import kotlinx.android.synthetic.main.activity_user_login.*
 import kotlinx.android.synthetic.main.activity_user_login.view.*
 import kotlinx.android.synthetic.main.activity_user_register.*
 import kotlinx.android.synthetic.main.toolbar_auth_user_activities.*
+import java.util.regex.Pattern
 
 class UserLoginActivity : AppCompatActivity() {
+    val EMAIL_ADDRESS_PATTERN: Pattern = Pattern.compile(
+        "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                "\\@" +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                "(" +
+                "\\." +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                ")+"
+    )
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_login)
@@ -31,13 +41,13 @@ class UserLoginActivity : AppCompatActivity() {
                 finish()
             }
         }
-        btn_login_user.setOnClickListener {
+        chpassword_btn_change_password.setOnClickListener {
             val loadingDialogLogin = LoadingProcessDialog(this@UserLoginActivity).create()
             loadingDialogLogin.show()
             val authUserRequest = AuthUserVolleyRequest(this@UserLoginActivity)
             if (checkUserInputs()) {
                 val e_email = layoutEtxt_email_login.editText!!.text.toString()
-                val e_password = layoutEtxt_password_login.editText!!.text.toString()
+                val e_password = layoutEtxt_password_change.editText!!.text.toString()
                 authUserRequest.login(
                     e_email,
                     e_password
@@ -89,13 +99,13 @@ class UserLoginActivity : AppCompatActivity() {
             }
 
         })//end
-        layoutEtxt_password_login.editText!!.addTextChangedListener(object : TextWatcher {
+        layoutEtxt_password_change.editText!!.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
 
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                layoutEtxt_password_login.isErrorEnabled = false
+                layoutEtxt_password_change.isErrorEnabled = false
             }
 
             override fun afterTextChanged(s: Editable?) {
@@ -108,22 +118,22 @@ class UserLoginActivity : AppCompatActivity() {
 
     private fun checkUserInputs(): Boolean {
         val e_email = layoutEtxt_email_login.editText!!.text.toString()
-        val e_password = layoutEtxt_password_login.editText!!.text.toString()
-        if (
-            e_email.isEmpty() &&
-            e_password.isEmpty()
-        ) {
-            if (e_email.isEmpty()) {
-                layoutEtxt_email_login.isErrorEnabled = true
-                layoutEtxt_email_login.error = "لطفا این فیلد را پر کلید."
-            }
-            if (e_password.isEmpty()) {
-                layoutEtxt_password_login.isErrorEnabled = true
-                layoutEtxt_password_login.error = "لطفا این فیلد را پر کلید."
-            }
+        val e_password = layoutEtxt_password_change.editText!!.text.toString()
+        if (e_email.isEmpty()) {
+            layoutEtxt_email_login.isErrorEnabled = true
+            layoutEtxt_email_login.error = "لطفا این فیلد را پر کلید."
             return false
-        } else {
-            return true
         }
+        if (e_password.isEmpty()) {
+            layoutEtxt_password_change.isErrorEnabled = true
+            layoutEtxt_password_change.error = "لطفا این فیلد را پر کلید."
+            return false
+        }
+        if (!e_email.matches(EMAIL_ADDRESS_PATTERN.toRegex())) {
+            layoutEtxt_email_login.isErrorEnabled = true
+            layoutEtxt_email_login.error = "لطفا پست الکترونیک خود را برسی کنید."
+            return false
+        }
+        return true
     }
 }

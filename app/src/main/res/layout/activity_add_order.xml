@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.cart.order.AddOrderActivity">
+
+    <include
+        android:id="@+id/include8"
+        layout="@layout/toolbar_auth_user_activities"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ScrollView
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toTopOf="@+id/order_btn_add_order"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include8">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="10dp">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/vazir"
+                android:text="آدرس ها"
+                android:textColor="@color/black" />
+
+            <TextView
+                android:id="@+id/order_tv_message_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/vazir"
+                android:text="لطفا یک آدرس را انتخاب کنید " />
+
+            <Button
+                android:id="@+id/order_open_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/blue_500"
+                android:fontFamily="@font/vazir"
+                android:text="افزودن آدرس"
+                android:textSize="16sp"
+                android:visibility="gone" />
+
+            <Spinner
+                android:id="@+id/order_spinner_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:spinnerMode="dialog" />
+
+            <View
+                android:id="@+id/view3"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginBottom="10dp"
+                android:background="#e8e8e8" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="10dp"
+                android:fontFamily="@font/vazir"
+                android:text="توضیحات"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/order_text_description"
+                android:layout_width="match_parent"
+                android:layout_height="180dp"
+                android:layout_marginBottom="10dp"
+                android:background="@drawable/text_address"
+                android:ems="10"
+                android:fontFamily="@font/vazir"
+                android:gravity="top"
+                android:hint="توضیحات .."
+                android:padding="10dp"
+                android:textSize="14sp" />
+
+        </LinearLayout>
+    </ScrollView>
+
+    <Button
+        android:id="@+id/order_btn_add_order"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/blue_500"
+        android:drawableLeft="@drawable/ic_baseline_payment_24"
+        android:fontFamily="@font/vazir"
+        android:text="اتصال به درگاه پرداخت"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

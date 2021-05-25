@@ -3,6 +3,7 @@ package ir.danialchoopan.danialkala.data.api.volleyRequestes.auth
 import android.content.Context
 import com.android.volley.toolbox.StringRequest
 import com.google.gson.Gson
+import com.google.gson.JsonObject
 import ir.danialchoopan.danialkala.data.UserSharePreferences
 import ir.danialchoopan.danialkala.data.api.EndPoints
 import ir.danialchoopan.danialkala.data.api.VolleySingleTon
@@ -392,4 +393,68 @@ class AuthUserVolleyRequest(private val m_context: Context) {
         }//end request register
         VolleySingleTon.getInstance(m_context).addToRequestQueue(str_request)
     }
+
+    fun sendVerifyEmail(
+        resultRequest: (success: Boolean) -> Unit
+    ) {
+        val str_request = object : StringRequest(Method.POST, EndPoints.sendVerifyEmail,
+            { strResponse ->
+                val jsonResult = JSONObject(strResponse)
+                resultRequest(jsonResult.getBoolean("success"))
+            }
+            //error
+            , {
+                it.printStackTrace()
+            }) {
+
+            override fun getHeaders(): MutableMap<String, String> {
+                val token_access = userSharePreferences.getToken()
+                val requestHeaders = HashMap<String, String>()
+                requestHeaders["Authorization"] = "Bearer $token_access";
+                return requestHeaders
+            }
+
+        }//end request register
+        VolleySingleTon.getInstance(m_context).addToRequestQueue(str_request)
+    }
+    //change password
+
+
+    fun changePassword(
+        oldPassword: String,
+        newPassword: String,
+        resultRequest: (success: Boolean, message: String) -> Unit
+    ) {
+        val str_request = object : StringRequest(Method.PATCH, EndPoints.updateUserInfo,
+            { strResponse ->
+                val jsonResponse = JSONObject(strResponse)
+                resultRequest(
+                    jsonResponse.getBoolean("success"),
+                    jsonResponse.getString("message")
+                )
+            }
+            //error
+            , {
+                it.printStackTrace()
+            }) {
+
+            override fun getParams(): MutableMap<String, String> {
+                val requestParam = HashMap<String, String>()
+                requestParam["oldPassword"] = oldPassword
+                requestParam["newPassword"] = newPassword
+                return requestParam
+            }
+
+            override fun getHeaders(): MutableMap<String, String> {
+                val token_access = userSharePreferences.getToken()
+                val requestHeaders = HashMap<String, String>()
+                requestHeaders["Authorization"] = "Bearer $token_access";
+                return requestHeaders
+            }
+
+        }//end request register
+        VolleySingleTon.getInstance(m_context).addToRequestQueue(str_request)
+    }
+
+
 }

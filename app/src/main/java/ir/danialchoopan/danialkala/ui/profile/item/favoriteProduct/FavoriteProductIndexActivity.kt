@@ -12,6 +12,8 @@ import kotlinx.android.synthetic.main.activity_favorite_product_index.*
 import kotlinx.android.synthetic.main.toolbar_auth_user_activities.*
 
 class FavoriteProductIndexActivity : AppCompatActivity() {
+    lateinit var favoriteProductRecyclerViewAdapter: FavoriteProductRecyclerViewAdapter
+    lateinit var favoriteProductVolleyRequest: FavoriteProductVolleyRequest
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_favorite_product_index)
@@ -19,17 +21,23 @@ class FavoriteProductIndexActivity : AppCompatActivity() {
         toolbar_auth_close.setOnClickListener {
             finish()
         }
-        val favoriteProductVolleyRequest =
+        favoriteProductVolleyRequest =
             FavoriteProductVolleyRequest(this@FavoriteProductIndexActivity)
+
+        //setup recycler view
+        favoriteProductRecyclerViewAdapter =
+            FavoriteProductRecyclerViewAdapter(this@FavoriteProductIndexActivity) {
+                getFavoriteProduct()
+            }
+        rcy_favoriteProduct.layoutManager = LinearLayoutManager(this@FavoriteProductIndexActivity)
+        rcy_favoriteProduct.adapter = favoriteProductRecyclerViewAdapter
+        getFavoriteProduct()
+    }
+
+    private fun getFavoriteProduct() {
         val loadingDialogFavoriteProduct =
             LoadingProcessDialog(this@FavoriteProductIndexActivity).create()
         loadingDialogFavoriteProduct.show()
-
-        //setup recycler view
-        val favoriteProductRecyclerViewAdapter =
-            FavoriteProductRecyclerViewAdapter(this@FavoriteProductIndexActivity)
-        rcy_favoriteProduct.layoutManager = LinearLayoutManager(this@FavoriteProductIndexActivity)
-        rcy_favoriteProduct.adapter = favoriteProductRecyclerViewAdapter
         favoriteProductVolleyRequest.getAllProducts { success, favoriteProduct ->
             loadingDialogFavoriteProduct.dismiss()
             if (success) {
@@ -41,6 +49,6 @@ class FavoriteProductIndexActivity : AppCompatActivity() {
             } else {
                 favoriteProduct_nonProduct.visibility = View.VISIBLE
             }
-        }
+        }//end get favorite product
     }
 }

@@ -46,6 +46,8 @@
         </androidx.appcompat.widget.Toolbar>
 
         <com.google.android.material.tabs.TabLayout
+            android:layoutDirection="rtl"
+            android:textDirection="rtl"
             android:id="@+id/tab_layout_product_category"
             app:tabTextAppearance="@style/tabLayout_category"
             android:layout_width="match_parent"

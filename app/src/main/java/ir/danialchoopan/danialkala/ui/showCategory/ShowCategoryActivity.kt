@@ -2,11 +2,13 @@ package ir.danialchoopan.danialkala.ui.showCategory
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import androidx.recyclerview.widget.GridLayoutManager
 import ir.danialchoopan.danialkala.R
 import ir.danialchoopan.danialkala.adapter.recyclerView.ShowProductCardRecyclerViewAdapter
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.ShowCategoryVolleyRequest
 import kotlinx.android.synthetic.main.activity_show_category.*
+import kotlinx.android.synthetic.main.toolbar_auth_user_activities.*
 
 class ShowCategoryActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,16 +20,20 @@ class ShowCategoryActivity : AppCompatActivity() {
             ShowProductCardRecyclerViewAdapter(this@ShowCategoryActivity)
         rcy_show_category_products.layoutManager = GridLayoutManager(this@ShowCategoryActivity, 2)
         rcy_show_category_products.adapter = showProductCardRecyclerViewAdapter
-
-        //setup back
-        product_category_back_arrow.setOnClickListener {
+        //setup toolbar
+        toolbar_auth_title.text = "نمایش دسته بندی این محصول"
+        toolbar_auth_close.setOnClickListener {
             finish()
         }
 
         //send the request
         ShowCategoryVolleyRequest(this@ShowCategoryActivity)
             .sendRequest(category_id.toString()) { showCategoryRequestDataModel ->
-
+                if (showCategoryRequestDataModel.category.products.isEmpty()) {
+                    pc_empty.visibility = View.VISIBLE
+                } else {
+                    pc_empty.visibility = View.GONE
+                }
                 val category_item = showCategoryRequestDataModel.category
                 //set category name
                 product_category_tv_name_category.text = category_item.name

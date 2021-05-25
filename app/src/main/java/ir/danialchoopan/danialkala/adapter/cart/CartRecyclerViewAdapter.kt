@@ -2,6 +2,7 @@ package ir.danialchoopan.danialkala.adapter.cart
 
 import android.app.AlertDialog
 import android.content.Context
+import android.content.Intent
 import android.nfc.Tag
 import android.util.Log
 import android.view.LayoutInflater
@@ -14,11 +15,15 @@ import ir.danialchoopan.danialkala.data.api.EndPoints
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.cart.CartVolleyRequest
 import ir.danialchoopan.danialkala.data.model.requests.userCart.CartDataModel
 import ir.danialchoopan.danialkala.data.model.requests.userCart.CartDataModelItem
+import ir.danialchoopan.danialkala.ui.product.ShowProductActivity
 import ir.danialchoopan.danialkala.utails.FormatNumbers
 import kotlinx.android.synthetic.main.row_home_categories.view.*
 import kotlinx.android.synthetic.main.row_item_cart_recycler_view.view.*
 
-class CartRecyclerViewAdapter(private val m_context: Context) :
+class CartRecyclerViewAdapter(
+    private val m_context: Context,
+    val resultDeleteItem: () -> Unit
+) :
     RecyclerView.Adapter<CartRecyclerViewAdapter.ViewHolder>() {
     inner class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
 
@@ -41,6 +46,13 @@ class CartRecyclerViewAdapter(private val m_context: Context) :
             FormatNumbers.formatPrice(productItem.price) + " تومان "
         Picasso.get().load(EndPoints.storageImg + productItem.thumbnail)
             .into(holder.view.row_cart_product_img)
+        //open product item
+        holder.view.setOnClickListener {
+            Intent(m_context, ShowProductActivity::class.java).also { intent ->
+                intent.putExtra("productId", productItem.id)
+                m_context.startActivity(intent)
+            }
+        }
 
         //delete form cart
         holder.view.row_cart_product_img_delete.setOnClickListener {
@@ -51,8 +63,7 @@ class CartRecyclerViewAdapter(private val m_context: Context) :
                     Log.i("tag", "cart id : ${productItem.cart.id}")
                     CartVolleyRequest(m_context).deleteCart(productItem.cart.id.toString()) { success ->
                         if (success) {
-                            notifyItemRemoved(position)
-                            notifyItemRangeChanged(position, ar_data.size-1)
+                            resultDeleteItem()
                         }
                     }
                 }

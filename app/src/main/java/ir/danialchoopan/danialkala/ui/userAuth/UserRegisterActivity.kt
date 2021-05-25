@@ -1,20 +1,29 @@
 package ir.danialchoopan.danialkala.ui.userAuth
 
-import android.annotation.SuppressLint
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import ir.danialchoopan.danialkala.R
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.auth.AuthUserVolleyRequest
 import ir.danialchoopan.danialkala.dialog.LoadingProcessDialog
 import kotlinx.android.synthetic.main.activity_user_register.*
 import kotlinx.android.synthetic.main.toolbar_auth_user_activities.*
+import java.util.regex.Pattern
 
 class UserRegisterActivity : AppCompatActivity() {
+    val EMAIL_ADDRESS_PATTERN: Pattern = Pattern.compile(
+        "[a-zA-Z0-9\\+\\.\\_\\%\\-\\+]{1,256}" +
+                "\\@" +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,64}" +
+                "(" +
+                "\\." +
+                "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
+                ")+"
+    )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_register)
@@ -37,9 +46,9 @@ class UserRegisterActivity : AppCompatActivity() {
         //btn register user
         btn_register_user.setOnClickListener {
             val loadingDialogRegister = LoadingProcessDialog(this@UserRegisterActivity).create()
-            loadingDialogRegister.show()
             val authUserRequest = AuthUserVolleyRequest(this@UserRegisterActivity)
             if (checkUserInputs()) {
+                loadingDialogRegister.show()
                 val e_name = layoutEtxt_name.editText!!.text.toString()
                 val e_email = layoutEtxt_email.editText!!.text.toString()
                 val e_password = layoutEtxt_password.editText!!.text.toString()
@@ -148,30 +157,36 @@ class UserRegisterActivity : AppCompatActivity() {
         val e_email = layoutEtxt_email.editText!!.text.toString()
         val e_password = layoutEtxt_password.editText!!.text.toString()
         val e_phone = layoutEtxt_phone.editText!!.text.toString()
-        if (e_name.isEmpty() &&
-            e_email.isEmpty() &&
-            e_password.isEmpty() &&
-            e_phone.isEmpty()
-        ) {
-            if (e_name.isEmpty()) {
-                layoutEtxt_name.isErrorEnabled = true
-                layoutEtxt_name.error = "لطفا این فیلد را پر کلید."
-            }
-            if (e_email.isEmpty()) {
-                layoutEtxt_email.isErrorEnabled = true
-                layoutEtxt_email.error = "لطفا این فیلد را پر کلید."
-            }
-            if (e_password.isEmpty()) {
-                layoutEtxt_password.isErrorEnabled = true
-                layoutEtxt_password.error = "لطفا این فیلد را پر کلید."
-            }
-            if (e_phone.isEmpty()) {
-                layoutEtxt_phone.isErrorEnabled = true
-                layoutEtxt_phone.error = "لطفا این فیلد را پر کلید."
-            }
+        if (e_name.isEmpty()) {
+            layoutEtxt_name.isErrorEnabled = true
+            layoutEtxt_name.error = "لطفا این فیلد را پر کلید."
             return false
-        } else {
-            return true
         }
+        if (e_email.isEmpty()) {
+            layoutEtxt_email.isErrorEnabled = true
+            layoutEtxt_email.error = "لطفا این فیلد را پر کلید."
+            return false
+        }
+        if (e_password.isEmpty()) {
+            layoutEtxt_password.isErrorEnabled = true
+            layoutEtxt_password.error = "لطفا این فیلد را پر کلید."
+            return false
+        }
+        if (e_phone.isEmpty()) {
+            layoutEtxt_phone.isErrorEnabled = true
+            layoutEtxt_phone.error = "لطفا این فیلد را پر کلید."
+            return false
+        }
+        if (!e_phone.matches("(\\+98|0)?9\\d{9}".toRegex())) {
+            layoutEtxt_phone.isErrorEnabled = true
+            layoutEtxt_phone.error = "لطفا شماره همراه خود را برسی کنید."
+            return false
+        }
+        if (!e_email.matches(EMAIL_ADDRESS_PATTERN.toRegex())) {
+            layoutEtxt_email.isErrorEnabled = true
+            layoutEtxt_email.error = "لطفا پست الکترونیک خود را برسی کنید."
+            return false
+        }
+        return true
     }
 }

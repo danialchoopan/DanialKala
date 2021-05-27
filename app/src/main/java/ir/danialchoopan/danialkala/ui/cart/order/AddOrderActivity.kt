@@ -4,7 +4,9 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import ir.danialchoopan.danialkala.R
+import ir.danialchoopan.danialkala.adapter.spinner.UserAddressSpinnerAdapter
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.UserAddressVolleyRequest
 import ir.danialchoopan.danialkala.dialog.LoadingProcessDialog
 import ir.danialchoopan.danialkala.ui.profile.item.userAddress.UserAddressIndexActivity
@@ -45,10 +47,23 @@ class AddOrderActivity : AppCompatActivity() {
                 }
             }
         }
+        loadingProcessDialog.show()
+        val userAddressVolleyRequest = UserAddressVolleyRequest(this@AddOrderActivity)
+        userAddressVolleyRequest.readUserAddress { success, userAddress ->
+            loadingProcessDialog.dismiss()
+            if (success) {
+                order_spinner_address.adapter =
+                    UserAddressSpinnerAdapter(this@AddOrderActivity, userAddress)
+            }
+        }
 
         order_btn_add_order.setOnClickListener {
             if (valid_address) {
-
+                Toast.makeText(
+                    this@AddOrderActivity,
+                    order_spinner_address.selectedItem.toString(),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         }
 

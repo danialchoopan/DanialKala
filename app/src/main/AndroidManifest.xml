@@ -10,8 +10,19 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.DanialKala">
-        <activity android:name=".ui.cart.checkOut.CheckOutProductActivity"></activity>
-        <activity android:name=".ui.cart.order.AddOrderActivity" />
+        <activity android:name=".ui.userAuth.VerifyPhoneNumberForgotPasswordActivity"></activity>
+        <activity
+            android:name=".ui.userAuth.ResetPasswordForgotPasswordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.userAuth.ForgotPasswordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
+        <activity
+            android:name=".ui.cart.order.AddOrderActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".ui.showAllProduct.MoreProductLayoutActivity" />
         <activity android:name=".ui.product.comment.ProductCommentActivity" />
         <activity android:name=".ui.subCategory.ShowSubCategoryActivity" />

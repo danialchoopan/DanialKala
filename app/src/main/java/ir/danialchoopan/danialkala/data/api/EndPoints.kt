@@ -19,8 +19,15 @@ object EndPoints {
     val checkVerifyPhone = "${baseUrl}auth/user/checkIfPhoneVerified/"
     val sendSmsVerifyUserCode = "${baseUrl}auth/user/sendVerifyPhoneSms/"
     val confirmVerifyPhoneSms = "${baseUrl}auth/user/confirmVerifyPhoneSms/"
+    //changePassword
+    val changePassword="${baseUrl}auth/user/changePassword/"
+    //forgot password
+    val checkUserPhoneForForgotPassword="${baseUrl}auth/user/checkUserPhoneForForgotPassword"
+    val sendVerifyPhoneSmsForgotPassword="${baseUrl}auth/user/sendVerifyPhoneSmsForgotPassword"
+    val confirmVerifyPhoneSmsForgotPassword="${baseUrl}auth/user/confirmVerifyPhoneSmsForgotPassword"
+    val changePasswordForgot="${baseUrl}auth/user/changePasswordForgot"
 
-    //email
+    //emailchangePasswordForgot
     val sendVerifyEmail = "${baseUrl}auth/user/sendVerifyEmail"
 
     //product

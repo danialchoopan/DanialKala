@@ -25,6 +25,7 @@ class UserLoginActivity : AppCompatActivity() {
                 "[a-zA-Z0-9][a-zA-Z0-9\\-]{0,25}" +
                 ")+"
     )
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_login)
@@ -39,6 +40,11 @@ class UserLoginActivity : AppCompatActivity() {
             Intent(this@UserLoginActivity, UserRegisterActivity::class.java).also { intent ->
                 startActivity(intent)
                 finish()
+            }
+        }
+        tv_open_forgot_password.setOnClickListener {
+            Intent(this@UserLoginActivity, ForgotPasswordActivity::class.java).also { intent ->
+                startActivity(intent)
             }
         }
         chpassword_btn_change_password.setOnClickListener {

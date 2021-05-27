@@ -61,16 +61,32 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:fontFamily="@font/vazir" />
+                    android:fontFamily="@font/vazir"
+                    android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 
+
+            <TextView
+                android:id="@+id/tv_open_forgot_password"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:fontFamily="@font/vazir"
+                android:gravity="center"
+                android:padding="10dp"
+                android:text="رمز عبور خود را فراموش کرده ام!"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#e8e8e8" />
 
             <TextView
                 android:id="@+id/tv_open_register"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_margin="20dp"
+                android:layout_margin="10dp"
                 android:fontFamily="@font/vazir"
                 android:gravity="center"
                 android:padding="10dp"

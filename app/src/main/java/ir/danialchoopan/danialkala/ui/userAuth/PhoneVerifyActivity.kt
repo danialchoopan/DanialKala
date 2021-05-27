@@ -43,6 +43,7 @@ class PhoneVerifyActivity : AppCompatActivity() {
         }
         //set toolbar title
         toolbar_auth_title.text = "تایید شماره همراه"
+        phone_verify_tv.append("\n برای شماره : ${intentUserPhone} ")
 
         //verify
         val ar_number_verify = arrayOf(
@@ -93,7 +94,7 @@ class PhoneVerifyActivity : AppCompatActivity() {
             val sumNumber =
                 verify_number_1.text.toString() + verify_number_2.text.toString() + verify_number_3.text.toString() +
                         verify_number_4.text.toString() + verify_number_5.text.toString() + verify_number_6.text.toString()
-            Log.i("Sum number ", sumNumber)
+
             authUserVolleyRequest.sendUserVerifySmsCode(intentUserToken, sumNumber) { sendcode ->
                 loadingDialogPhoneVerify.dismiss()
                 when (sendcode.response_code) {

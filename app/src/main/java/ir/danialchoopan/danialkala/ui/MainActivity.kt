@@ -10,6 +10,7 @@ import android.text.SpannableString
 import android.view.MenuItem
 import android.view.SubMenu
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.ActionBarDrawerToggle
@@ -31,8 +32,8 @@ import ir.danialchoopan.danialkala.ui.searchProduct.SearchActivity
 import ir.danialchoopan.danialkala.ui.showAllProduct.MoreProductLayoutActivity
 import ir.danialchoopan.danialkala.ui.userAuth.UserRegisterActivity
 import ir.danialchoopan.danialkala.utails.CustomTypefaceSpan
+import ir.danialchoopan.danialkala.utails.LoadGravatarProfileUser
 import kotlinx.android.synthetic.main.activity_main.*
-
 
 class MainActivity : AppCompatActivity() {
     lateinit var authUserVolleyRequest: AuthUserVolleyRequest
@@ -88,7 +89,10 @@ class MainActivity : AppCompatActivity() {
             vpSliderMainPage.adapter =
                 ImgSliderViewPagerAdapter(this@MainActivity, homePageViewModel.home_slider)
         });
-
+        LoadGravatarProfileUser(this@MainActivity).LoadImage(
+            nav_menu_main_activity.getHeaderView(0)
+                .findViewById<ImageView>(R.id.profile_user_profile_gravatar_header)
+        )
         //on click nav
         nav_menu_main_activity.setNavigationItemSelectedListener {
             when (it.itemId) {

@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.toolbar_auth_user_activities.*
 class UserCartActivity : AppCompatActivity() {
     lateinit var cartVolleyRequest: CartVolleyRequest
     lateinit var cartRecyclerViewAdapter: CartRecyclerViewAdapter
+    var sum_price = 0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_user_cart)
@@ -54,6 +55,7 @@ class UserCartActivity : AppCompatActivity() {
                         ).show()
                     } else {
                         Intent(this@UserCartActivity, AddOrderActivity::class.java).also { intent ->
+                            intent.putExtra("intentAmount", sum_price)
                             startActivity(intent)
                         }
                     }//else
@@ -78,7 +80,7 @@ class UserCartActivity : AppCompatActivity() {
                 } else {
                     cart_tv_empty.visibility = View.GONE
                 }
-                var sum_price = 0
+                sum_price = 0
                 userCart.forEach { item ->
                     sum_price += item.price.toInt()
                 }

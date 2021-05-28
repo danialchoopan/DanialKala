@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.profile.item.userOrders.UserOrderProductActivity">
+
+    <include
+        android:id="@+id/include13"
+        layout="@layout/toolbar_auth_user_activities"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/order_product_recyclerView"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/include13" />
+
+    <TextView
+        android:id="@+id/product_order_empty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/vazir"
+        android:text="محصول برای نمایش وجود ندارد"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="@+id/order_product_recyclerView"
+        app:layout_constraintEnd_toEndOf="@+id/order_product_recyclerView"
+        app:layout_constraintStart_toStartOf="@+id/order_product_recyclerView"
+        app:layout_constraintTop_toBottomOf="@+id/include13" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

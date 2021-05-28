@@ -48,6 +48,10 @@ object EndPoints {
     val userCart = "${baseUrl}user/cart/"
     //end user cart
 
+    //orders
+    val addOrder="${baseUrl}user/order/"
+
+
     //edit profile routes
 
     //user address routes

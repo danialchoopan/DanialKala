@@ -11,6 +11,8 @@ import ir.danialchoopan.danialkala.data.api.volleyRequestes.auth.AuthUserVolleyR
 import ir.danialchoopan.danialkala.ui.profile.item.ItemEditProfileActivity
 import ir.danialchoopan.danialkala.ui.profile.item.favoriteProduct.FavoriteProductIndexActivity
 import ir.danialchoopan.danialkala.ui.profile.item.userAddress.UserAddressIndexActivity
+import ir.danialchoopan.danialkala.ui.profile.item.userOrders.UserOrdersActivity
+import ir.danialchoopan.danialkala.utails.LoadGravatarProfileUser
 import ir.danialchoopan.danialkala.utails.UpdateUserInfoShareInfo
 import kotlinx.android.synthetic.main.activity_user_profile.*
 import kotlinx.android.synthetic.main.toolbar_auth_user_activities.*
@@ -34,6 +36,11 @@ class UserProfileActivity : AppCompatActivity() {
                 }
             }
         }
+
+        LoadGravatarProfileUser(this@UserProfileActivity).LoadImage(
+            profile_user_profile_gravatar
+        )
+
         profile_btn_send_email.setOnClickListener {
             profile_progress_bar_send_email.visibility = View.VISIBLE
             profile_btn_send_email.visibility = View.GONE
@@ -70,6 +77,11 @@ class UserProfileActivity : AppCompatActivity() {
 
         profile_item_address.setOnClickListener {
             Intent(this@UserProfileActivity, UserAddressIndexActivity::class.java).also { intent ->
+                startActivity(intent)
+            }
+        }
+        profile_item_product_order.setOnClickListener {
+            Intent(this@UserProfileActivity, UserOrdersActivity::class.java).also { intent ->
                 startActivity(intent)
             }
         }

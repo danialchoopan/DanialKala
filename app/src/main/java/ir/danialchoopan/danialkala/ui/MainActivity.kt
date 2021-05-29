@@ -1,14 +1,8 @@
 package ir.danialchoopan.danialkala.ui
 
-import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Typeface
 import android.os.Bundle
-import android.text.Spannable
-import android.text.SpannableString
-import android.view.MenuItem
-import android.view.SubMenu
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -24,6 +18,8 @@ import ir.danialchoopan.danialkala.adapter.slider.ImgSliderViewPagerAdapter
 import ir.danialchoopan.danialkala.data.UserSharePreferences
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.auth.AuthUserVolleyRequest
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.cart.CartVolleyRequest
+import ir.danialchoopan.danialkala.dialog.ErrorDialog
+import ir.danialchoopan.danialkala.dialog.SuccessDialog
 import ir.danialchoopan.danialkala.fragments.home.HomePageViewModel
 import ir.danialchoopan.danialkala.ui.cart.UserCartActivity
 import ir.danialchoopan.danialkala.ui.category.ProductCategoryActivity
@@ -31,7 +27,6 @@ import ir.danialchoopan.danialkala.ui.profile.UserProfileActivity
 import ir.danialchoopan.danialkala.ui.searchProduct.SearchActivity
 import ir.danialchoopan.danialkala.ui.showAllProduct.MoreProductLayoutActivity
 import ir.danialchoopan.danialkala.ui.userAuth.UserRegisterActivity
-import ir.danialchoopan.danialkala.utails.CustomTypefaceSpan
 import ir.danialchoopan.danialkala.utails.LoadGravatarProfileUser
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -43,6 +38,28 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         userSharePreferences = UserSharePreferences(this@MainActivity).sharePreferences
         authUserVolleyRequest = AuthUserVolleyRequest(this@MainActivity)
+
+        val intentPay = intent.getStringExtra("success").toString()
+
+        if (intentPay == "ture") {
+            val successDialog = SuccessDialog(this@MainActivity)
+            val createSuccessDialog = successDialog.create()
+            successDialog.layout.findViewById<TextView>(R.id.alert_success_btn_dismiss)
+                .setOnClickListener {
+                    createSuccessDialog.dismiss()
+                }
+            createSuccessDialog.show()
+        }
+
+        if (intentPay == "false") {
+            val errorDialog = ErrorDialog(this@MainActivity)
+            val errorDialogDialog = errorDialog.create()
+            errorDialog.layout.findViewById<TextView>(R.id.alert_close_btn_dismiss)
+                .setOnClickListener {
+                    errorDialogDialog.dismiss()
+                }
+            errorDialogDialog.show()
+        }
 
         //set toolbar and navigation menu
         setSupportActionBar(toolbar_main_activity)

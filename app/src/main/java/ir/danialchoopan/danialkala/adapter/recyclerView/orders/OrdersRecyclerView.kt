@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import ir.danialchoopan.danialkala.R
 import ir.danialchoopan.danialkala.data.model.requests.orders.OrderDataModelItem
 import ir.danialchoopan.danialkala.ui.profile.item.userOrders.UserOrderProductActivity
+import ir.danialchoopan.danialkala.utails.FormatNumbers
 import kotlinx.android.synthetic.main.row_orders_recycler_view_item.view.*
 
 class OrdersRecyclerView(private val m_context: Context) :
@@ -31,6 +32,16 @@ class OrdersRecyclerView(private val m_context: Context) :
         val orderItem = ar_data[position]
         holder.view.item_orders_order_number.text = "شماره سفارش : " + orderItem.order_product_id
         holder.view.item_orders_order_description.text = "توضیحات : " + orderItem.description
+        holder.view.item_orders_order_price.text =
+            FormatNumbers.formatPrice(orderItem.price.toString()) + "تومان"
+
+        if (orderItem.status == 100) {
+            holder.view.item_orders_order_status_success.visibility = View.VISIBLE
+            holder.view.item_orders_order_status_error.visibility = View.GONE
+        } else {
+            holder.view.item_orders_order_status_success.visibility = View.GONE
+            holder.view.item_orders_order_status_error.visibility = View.VISIBLE
+        }
 
         //open product order
         holder.view.setOnClickListener {

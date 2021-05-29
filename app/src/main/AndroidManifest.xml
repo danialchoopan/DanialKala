@@ -57,13 +57,22 @@
         <activity android:name=".ui.category.ProductCategoryActivity" />
         <activity android:name=".ui.product.ShowProductActivity" />
         <activity android:name=".ui.MainActivity">
+
+            <intent-filter>
+                <action android:name="ir.danialchoopan.danialkala" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".SplashActivity" >
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SplashActivity" />
     </application>
 
 </manifest>

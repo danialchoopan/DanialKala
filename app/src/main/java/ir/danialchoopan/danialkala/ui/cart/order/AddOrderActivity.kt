@@ -82,6 +82,7 @@ class AddOrderActivity : AppCompatActivity() {
                         Intent(Intent.ACTION_VIEW).also { intent ->
                             intent.data = Uri.parse(urlIdPay)
                             startActivity(intent)
+                            finishAffinity()
                         }
                     } else {
                         Toast.makeText(
@@ -96,9 +97,11 @@ class AddOrderActivity : AppCompatActivity() {
         }
 
         order_open_address.setOnClickListener {
-            Intent(this@AddOrderActivity, UserAddressIndexActivity::class.java).also { intent ->
-                startActivity(intent)
-                finish()
+            if (amount == 0) {
+                Intent(this@AddOrderActivity, UserAddressIndexActivity::class.java).also { intent ->
+                    startActivity(intent)
+                    finish()
+                }
             }
         }
 

@@ -29,6 +29,7 @@ import ir.danialchoopan.danialkala.ui.showAllProduct.MoreProductLayoutActivity
 import ir.danialchoopan.danialkala.ui.userAuth.UserRegisterActivity
 import ir.danialchoopan.danialkala.utails.LoadGravatarProfileUser
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_show_product.*
 
 class MainActivity : AppCompatActivity() {
     lateinit var authUserVolleyRequest: AuthUserVolleyRequest
@@ -118,6 +119,12 @@ class MainActivity : AppCompatActivity() {
                         startActivity(intent)
                     }
                 }
+                R.id.navigation_menu_item_cart_shop -> {
+                    Intent(this@MainActivity, UserCartActivity::class.java).also { intent ->
+                        startActivity(intent)
+                    }
+                }
+
             }
             false
         }
@@ -139,17 +146,28 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-
+        var count_cart = 0
         val cartVolleyRequest = CartVolleyRequest(this@MainActivity)
         cartVolleyRequest.userCart { success, userCart ->
             if (success) {
                 toolbar_img_btn_user_cart_tv_count.text = userCart.size.toString()
+                count_cart = userCart.size
             }
         }
         userSharePreferences = UserSharePreferences(this@MainActivity).sharePreferences
         //on click auth btn on
         val auth_header_lable =
             nav_menu_main_activity.getHeaderView(0).findViewById<TextView>(R.id.tv_auth_header_nav)
+        val cart_manu_item =
+            nav_menu_main_activity.menu.findItem(R.id.navigation_menu_item_cart_shop)
+        if (userSharePreferences.contains("token")) {
+            cart_manu_item.actionView.findViewById<TextView>(R.id.action_tv_cart_manu).text =
+                count_cart.toString()
+            cart_manu_item.isVisible = true
+        } else {
+            cart_manu_item.isVisible = false
+
+        }
         val userNameShare = userSharePreferences.getString("name", "")
         if (userNameShare!!.isNotEmpty()) {
             auth_header_lable.text = userNameShare

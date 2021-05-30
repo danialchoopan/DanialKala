@@ -240,35 +240,6 @@
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
-
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="60dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:fontFamily="@font/vazir"
-                        android:gravity="center|right"
-                        android:paddingRight="10dp"
-                        android:text="تنظیمات"
-                        android:textColor="@color/black"
-                        android:textSize="17sp" />
-
-                    <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="match_parent"
-                        android:padding="5dp"
-                        app:srcCompat="@drawable/ic_baseline_settings_24" />
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
             <androidx.cardview.widget.CardView
                 android:id="@+id/profile_item_exit"
                 android:layout_width="match_parent"

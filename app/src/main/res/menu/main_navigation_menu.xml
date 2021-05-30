@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <group
         android:id="@+id/group1"
@@ -15,12 +16,18 @@
     </group>
 
     <group
-        android:id="@+id/group4"
+        android:id="@+id/group2"
         android:checkableBehavior="single">
         <item
-            android:id="@+id/navigation_menu_item_setting"
-            android:icon="@drawable/ic_baseline_settings_24"
-            android:title="تنظیمات" />
+            android:id="@+id/navigation_menu_item_cart_shop"
+            android:icon="@drawable/ic_baseline_shopping_cart_24"
+            android:title="سبد خرید"
+            app:actionLayout="@layout/action_cart_menu" />
+    </group>
+
+    <group
+        android:id="@+id/group4"
+        android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_menu_item_question"
             android:icon="@drawable/ic_baseline_help_24"

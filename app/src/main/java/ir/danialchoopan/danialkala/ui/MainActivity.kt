@@ -21,6 +21,7 @@ import ir.danialchoopan.danialkala.data.api.volleyRequestes.cart.CartVolleyReque
 import ir.danialchoopan.danialkala.dialog.ErrorDialog
 import ir.danialchoopan.danialkala.dialog.SuccessDialog
 import ir.danialchoopan.danialkala.fragments.home.HomePageViewModel
+import ir.danialchoopan.danialkala.ui.about.AboutUsActivity
 import ir.danialchoopan.danialkala.ui.cart.UserCartActivity
 import ir.danialchoopan.danialkala.ui.category.ProductCategoryActivity
 import ir.danialchoopan.danialkala.ui.profile.UserProfileActivity
@@ -121,6 +122,11 @@ class MainActivity : AppCompatActivity() {
                 }
                 R.id.navigation_menu_item_cart_shop -> {
                     Intent(this@MainActivity, UserCartActivity::class.java).also { intent ->
+                        startActivity(intent)
+                    }
+                }
+                R.id.navigation_menu_item_about_us -> {
+                    Intent(this@MainActivity, AboutUsActivity::class.java).also { intent ->
                         startActivity(intent)
                     }
                 }

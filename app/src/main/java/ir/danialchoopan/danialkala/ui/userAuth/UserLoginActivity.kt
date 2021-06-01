@@ -9,6 +9,7 @@ import android.widget.Toast
 import ir.danialchoopan.danialkala.R
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.auth.AuthUserVolleyRequest
 import ir.danialchoopan.danialkala.dialog.LoadingProcessDialog
+import ir.danialchoopan.danialkala.ui.MainActivity
 import kotlinx.android.synthetic.main.activity_user_login.*
 import kotlinx.android.synthetic.main.activity_user_login.view.*
 import kotlinx.android.synthetic.main.activity_user_register.*
@@ -66,18 +67,40 @@ class UserLoginActivity : AppCompatActivity() {
                             Toast.LENGTH_SHORT
                         ).show()
                         //show toast welcome
-                        Intent(
-                            this@UserLoginActivity,
-                            PhoneVerifyActivity::class.java
-                        ).also { intent ->
-                            intent.putExtra("intentUserId", loginUserDataModel.user.id)
-                            intent.putExtra("intentUserToken", loginUserDataModel.token)
-                            intent.putExtra("intentUserName", loginUserDataModel.user.name)
-                            intent.putExtra("intentUserEmail", loginUserDataModel.user.email)
-                            intent.putExtra("intentUserPhone", loginUserDataModel.user.phone)
-                            startActivity(intent)
-                            finish()
-                        }//end intent
+                        val loadingDialogCheckPhone =
+                            LoadingProcessDialog(this@UserLoginActivity).create()
+                        loadingDialogCheckPhone.show()
+                        authUserRequest.checkIfPhoneVerified { verified ->
+                            loadingDialogCheckPhone.dismiss()
+                            if (verified) {
+                                Intent(
+                                    this@UserLoginActivity,
+                                    MainActivity::class.java
+                                ).also { intent ->
+                                    startActivity(intent)
+                                    finishAffinity()
+                                }
+                            } else {
+                                Intent(
+                                    this@UserLoginActivity,
+                                    PhoneVerifyActivity::class.java
+                                ).also { intent ->
+                                    intent.putExtra("intentUserId", loginUserDataModel.user.id)
+                                    intent.putExtra("intentUserToken", loginUserDataModel.token)
+                                    intent.putExtra("intentUserName", loginUserDataModel.user.name)
+                                    intent.putExtra(
+                                        "intentUserEmail",
+                                        loginUserDataModel.user.email
+                                    )
+                                    intent.putExtra(
+                                        "intentUserPhone",
+                                        loginUserDataModel.user.phone
+                                    )
+                                    startActivity(intent)
+                                    finish()
+                                }//end intent
+                            }
+                        }
                     } else {
                         Toast.makeText(
                             this@UserLoginActivity,

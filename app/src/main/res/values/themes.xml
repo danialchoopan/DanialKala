@@ -19,8 +19,9 @@
     </style>
 
     <style name="NavigationViewStyle">
-        <item name="android:textSize">18sp</item> <!-- menu item text size-->
-        <item name="android:listPreferredItemHeightSmall">18sp</item><!-- menu item height-->
+        <item name="android:textSize">18sp</item>
+        <item name="android:listPreferredItemHeightSmall">18sp</item>
         <item name="fontFamily">@font/vazir</item>
+        <item name="android:actionMenuTextColor">@color/navColor</item>
     </style>
 </resources>

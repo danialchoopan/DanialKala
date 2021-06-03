@@ -86,10 +86,32 @@
                 android:layout_height="wrap_content"
                 android:orientation="vertical">
 
-                <androidx.viewpager.widget.ViewPager
-                    android:id="@+id/vpSliderMainPage"
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="200dp" />
+                    android:layout_height="210dp">
+
+                    <androidx.viewpager.widget.ViewPager
+                        android:id="@+id/vpSliderMainPage"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <LinearLayout
+                        android:id="@+id/linear_dot_slider"
+                        android:layout_width="0dp"
+                        android:layout_height="40dp"
+                        android:gravity="center"
+                        android:orientation="horizontal"
+                        app:layout_constraintBottom_toBottomOf="@+id/vpSliderMainPage"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintStart_toStartOf="parent"
+                        android:textDirection="ltr"
+                        android:layoutDirection="ltr"
+                        />
+                </androidx.constraintlayout.widget.ConstraintLayout>
 
                 <TextView
                     android:layout_width="match_parent"
@@ -124,6 +146,5 @@
         app:headerLayout="@layout/header_main_navigation_menu"
         app:itemTextAppearance="@style/NavigationViewStyle"
         app:menu="@menu/main_navigation_menu"
-
         />
 </androidx.drawerlayout.widget.DrawerLayout>

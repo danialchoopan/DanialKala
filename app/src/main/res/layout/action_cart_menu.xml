@@ -5,6 +5,6 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center|left"
     android:layout_margin="5dp"
-    android:background="@drawable/shop_cart_badgth"
     android:padding="8dp"
+    android:textSize="20sp"
     android:text="1" />

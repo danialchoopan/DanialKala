@@ -2,7 +2,10 @@ package ir.danialchoopan.danialkala.ui
 
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
+import android.os.Handler
+import android.text.Html
 import android.view.View
 import android.widget.ImageView
 import android.widget.TextView
@@ -12,12 +15,14 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import androidx.viewpager.widget.ViewPager
 import ir.danialchoopan.danialkala.R
 import ir.danialchoopan.danialkala.adapter.category.RecyclerViewCategoryProductHome
 import ir.danialchoopan.danialkala.adapter.slider.ImgSliderViewPagerAdapter
 import ir.danialchoopan.danialkala.data.UserSharePreferences
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.auth.AuthUserVolleyRequest
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.cart.CartVolleyRequest
+import ir.danialchoopan.danialkala.data.model.requests.home.Home_slider
 import ir.danialchoopan.danialkala.dialog.ErrorDialog
 import ir.danialchoopan.danialkala.dialog.SuccessDialog
 import ir.danialchoopan.danialkala.fragments.home.HomePageViewModel
@@ -32,9 +37,12 @@ import ir.danialchoopan.danialkala.utails.LoadGravatarProfileUser
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_show_product.*
 
+
 class MainActivity : AppCompatActivity() {
     lateinit var authUserVolleyRequest: AuthUserVolleyRequest
     lateinit var userSharePreferences: SharedPreferences
+    var count_slider = 0
+    var sliderImgUrls = emptyList<Home_slider>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -96,7 +104,11 @@ class MainActivity : AppCompatActivity() {
         viewModelHome.getHomePageData()
         //observe
         viewModelHome.homePageData.observe(this, Observer { homePageViewModel ->
-
+            //set slider list
+            sliderImgUrls = homePageViewModel.home_slider
+            dots_slider(0)
+            //set auto slide
+            auto_slider(sliderImgUrls.size)
             //set category
             rycAdapterCategories.setData(homePageViewModel.categories)
 
@@ -112,6 +124,25 @@ class MainActivity : AppCompatActivity() {
             nav_menu_main_activity.getHeaderView(0)
                 .findViewById<ImageView>(R.id.profile_user_profile_gravatar_header)
         )
+        vpSliderMainPage.setOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                dots_slider(position)
+                count_slider = position
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+        })
         //on click nav
         nav_menu_main_activity.setNavigationItemSelectedListener {
             when (it.itemId) {
@@ -216,4 +247,40 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
+    private fun auto_slider(len: Int) {
+        val handler = Handler()
+        Thread {
+            count_slider = 0
+            while (true) {
+                try {
+                    handler.post {
+                        vpSliderMainPage.currentItem = count_slider
+                        count_slider++
+                    }
+                    Thread.sleep(5000)
+                    if (count_slider === len) {
+                        count_slider = 0
+                    }
+                } catch (e: Exception) {
+                }
+            }
+        }.start()
+    }
+
+    private fun dots_slider(position: Int) {
+        linear_dot_slider.removeAllViews()
+        val textViews_dot = arrayOfNulls<TextView>(sliderImgUrls.size)
+        for (i in 0 until sliderImgUrls.size) {
+            textViews_dot[i] = TextView(this@MainActivity)
+            textViews_dot[i]!!.text = Html.fromHtml("&#8226")
+            textViews_dot[i]!!.textSize = 32f
+            textViews_dot[i]!!.setTextColor(Color.rgb(62, 62, 62))
+            linear_dot_slider.addView(textViews_dot[i])
+        }
+        if (sliderImgUrls.size > 0) {
+            textViews_dot[position]!!.setTextColor(resources.getColor(R.color.white))
+        }
+    }
+
 }

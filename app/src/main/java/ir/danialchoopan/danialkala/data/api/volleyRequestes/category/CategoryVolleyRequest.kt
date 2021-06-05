@@ -14,7 +14,7 @@ class CategoryVolleyRequest(private val m_context: Context) {
         categoryId: String,
         requestResult: (success: Boolean, subCategory: List<SubCategoryItem>) -> Unit
     ) {
-        val str_request = StringRequest(Request.Method.GET, EndPoints.subCategory + categoryId,
+        val str_request = StringRequest(Request.Method.GET, EndPoints.subCategory +"/"+ categoryId,
             { str_response ->
                 try {
                     val subCategory =

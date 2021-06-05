@@ -20,7 +20,7 @@ class CartVolleyRequest(private val m_context: Context) {
     ) {
         val str_request =
             object : StringRequest(
-                Request.Method.GET, EndPoints.userCart + productId,
+                Request.Method.GET, EndPoints.userCart +"/"+ productId,
                 { strResponse ->
                     try {
                         val jsonResult = JSONObject(strResponse)
@@ -129,7 +129,7 @@ class CartVolleyRequest(private val m_context: Context) {
     ) {
         val str_request =
             object : StringRequest(
-                Request.Method.DELETE, EndPoints.userCart + cartId,
+                Request.Method.DELETE, EndPoints.userCart +"/"+ cartId,
                 { strResponse ->
                     try {
                         val jsonResult = JSONObject(strResponse)

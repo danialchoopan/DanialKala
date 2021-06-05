@@ -15,7 +15,7 @@ class ShowCategoryVolleyRequest(val m_context: Context) {
         resultRequest: (showCategoryRequestDataModel: ShowCategoryRequestDataModel) -> Unit
     ) {
         val jsonRequest =
-            JsonObjectRequest(Request.Method.GET, EndPoints.showCategory + categoryId, null,
+            JsonObjectRequest(Request.Method.GET, EndPoints.showCategory +"/"+ categoryId, null,
                 { jsonObj ->
                     val showCategoryModel = Gson().fromJson(
                         jsonObj.toString(),

@@ -66,7 +66,7 @@ class UserAddressVolleyRequest(val m_context: Context) {
         resultRequest: (success: Boolean) -> Unit
     ) {
         val str_request =
-            object : StringRequest(Method.PATCH, EndPoints.userAddress + idUserAddressItem,
+            object : StringRequest(Method.PATCH, EndPoints.userAddress +"/"+ idUserAddressItem,
                 { str_response ->
                     val jsonResponse = JSONObject(str_response)
                     resultRequest(jsonResponse.getBoolean("success"))
@@ -134,7 +134,7 @@ class UserAddressVolleyRequest(val m_context: Context) {
             userAddress: UserAddressDataModelItem
         ) -> Unit
     ) {
-        val str_request = object : StringRequest(Method.GET, EndPoints.userAddress + idItem,
+        val str_request = object : StringRequest(Method.GET, EndPoints.userAddress +"/"+ idItem,
             { str_response ->
                 try {
                     val gsonUserAddressDataModelItem =
@@ -178,7 +178,7 @@ class UserAddressVolleyRequest(val m_context: Context) {
         resultRequest: (success: Boolean) -> Unit
     ) {
         val str_request =
-            object : StringRequest(Method.DELETE, EndPoints.userAddress + userAddressId,
+            object : StringRequest(Method.DELETE, EndPoints.userAddress +"/"+ userAddressId,
                 { str_response ->
                     val jsonResponse = JSONObject(str_response)
                     resultRequest(jsonResponse.getBoolean("success"))

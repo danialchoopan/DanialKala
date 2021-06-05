@@ -38,7 +38,7 @@ class ShowStatesVolleyRequest(val m_context: Context) {
         Cities:(success: Boolean,
         statesRequestDataModel: StatesRequestDataModel)->Unit
     ) {
-        val str_request = object : StringRequest(Method.GET, EndPoints.states + state_id,
+        val str_request = object : StringRequest(Method.GET, EndPoints.states +"/"+ state_id,
             { str_response ->
                 try {
                     val gsonStatesRequestDataModel =

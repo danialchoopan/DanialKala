@@ -94,7 +94,7 @@ class OrderVolleyRequest(private val m_context: Context) {
     ) {
         val str_request =
             object : StringRequest(
-                Request.Method.GET, EndPoints.addOrder + order_number,
+                Request.Method.GET, EndPoints.addOrder +"/"+ order_number,
                 { strResponse ->
                     try {
                         val gsonOrdersProduct =

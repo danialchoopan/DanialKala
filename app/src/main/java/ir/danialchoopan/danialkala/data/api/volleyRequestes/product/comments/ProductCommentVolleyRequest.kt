@@ -18,7 +18,7 @@ class ProductCommentVolleyRequest(private val m_context: Context) {
         productId: String,
         requestResult: (success: Boolean, productComment: ProductComment) -> Unit
     ) {
-        val str_request = StringRequest(Request.Method.GET, EndPoints.productComment + productId,
+        val str_request = StringRequest(Request.Method.GET, EndPoints.productComment +"/"+ productId,
                 { strResponse ->
                     try {
                         val productComment =
@@ -83,7 +83,7 @@ class ProductCommentVolleyRequest(private val m_context: Context) {
     ) {
 
         val str_request =
-            object : StringRequest(Request.Method.DELETE, EndPoints.productComment + commentId,
+            object : StringRequest(Request.Method.DELETE, EndPoints.productComment +"/"+ commentId,
                 { strResponse ->
                     try {
                         val jsonResult = JSONObject(strResponse)

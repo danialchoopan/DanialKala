@@ -21,42 +21,34 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
         setLocale("fa")
-
-        Intent(
+        //check connection to internet
+        VolleySingleTon.getInstance(this@SplashActivity).addToRequestQueue(
+            StringRequest(
+                Request.Method.GET,
+                EndPoints.home,
+                //success
+                { response ->
+                    //open home activity
+                    Intent(
                         this@SplashActivity,
                         MainActivity::class.java
                     ).also { intentOpenHomeActivity ->
                         startActivity(intentOpenHomeActivity)
                         finish()
                     }
-        //check connection to internet
-//        VolleySingleTon.getInstance(this@SplashActivity).addToRequestQueue(
-//            StringRequest(
-//                Request.Method.GET,
-//                EndPoints.home,
-//                //success
-//                { response ->
-//                    //open home activity
-//                    Intent(
-//                        this@SplashActivity,
-//                        MainActivity::class.java
-//                    ).also { intentOpenHomeActivity ->
-//                        startActivity(intentOpenHomeActivity)
-//                        finish()
-//                    }
-//                },
-//                //error
-//                { errorResponse ->
-//                    Snackbar.make(
-//                        constraintLayoutSpalshScreen,
-//                        R.string.errorConnectionSnackBar,
-//                        Snackbar.LENGTH_INDEFINITE
-//                    ).setAction(R.string.tryAgain) {
-//
-//                    }
-//                })
-//            //end request
-//        )
+                },
+                //error
+                { errorResponse ->
+                    Snackbar.make(
+                        constraintLayoutSpalshScreen,
+                        R.string.errorConnectionSnackBar,
+                        Snackbar.LENGTH_INDEFINITE
+                    ).setAction(R.string.tryAgain) {
+
+                    }
+                })
+            //end request
+        )
         //end volley single ton
     }
 

@@ -15,7 +15,7 @@ class ShowSingleProductVolleyRequest(private val m_context: Context) {
         productId: String,
         requestResult: (success: Boolean, product: SingleProduct) -> Unit
     ) {
-        val str_request = StringRequest(Request.Method.GET, EndPoints.showProduct + productId,
+        val str_request = StringRequest(Request.Method.GET, EndPoints.showProduct +"/"+ productId,
             { strResponse ->
                 try {
                     val productModel =

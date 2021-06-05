@@ -28,6 +28,7 @@ class ProductCategoryRecyclerViewAdapter(val m_context: Context) :
         val category_item = ar_data[position]
         holder.view.lbl_name_row_category_product.text = category_item.name
         Picasso.get().load(EndPoints.storage + category_item.sub_category_photo)
+            .placeholder(R.drawable.pholder)
             .into(holder.view.imgView_item_category_product)
 
         holder.view.setOnClickListener {

@@ -42,6 +42,7 @@ class ProductOrdersRecyclerView(private val m_context: Context) :
 
         //load img
         Picasso.get().load(EndPoints.storageImg + productOrderItem.thumbnail)
+            .placeholder(R.drawable.pholder)
             .into(holder.view.product_order_img)
 
         //show product

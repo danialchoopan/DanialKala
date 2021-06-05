@@ -38,6 +38,7 @@ class ShowProductAllRecyclerViewAdapter(
             FormatNumbers.formatPrice(productItem.price.toString()) + "تومان"
         //load img
         Picasso.get().load(EndPoints.storageImg + productItem.thumbnail)
+            .placeholder(R.drawable.pholder)
             .into(holder.view.row_imgProduct)
 
         holder.view.setOnClickListener {

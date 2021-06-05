@@ -45,6 +45,7 @@ class CartRecyclerViewAdapter(
         holder.view.row_cart_product_price.text =
             FormatNumbers.formatPrice(productItem.price) + " تومان "
         Picasso.get().load(EndPoints.storageImg + productItem.thumbnail)
+            .placeholder(R.drawable.pholder)
             .into(holder.view.row_cart_product_img)
         //open product item
         holder.view.setOnClickListener {

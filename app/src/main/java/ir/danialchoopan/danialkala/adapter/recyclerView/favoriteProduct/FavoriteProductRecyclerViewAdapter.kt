@@ -41,6 +41,7 @@ class FavoriteProductRecyclerViewAdapter(
         val favoriteProduct = ar_data[position]
         holder.view.row_item_favorite_tv_title_name.text = favoriteProduct.name
         Picasso.get().load(EndPoints.storageImg + favoriteProduct.thumbnail)
+            .placeholder(R.drawable.pholder)
             .into(holder.view.row_item_favorite_img_product)
         //show product
         holder.view.setOnClickListener {

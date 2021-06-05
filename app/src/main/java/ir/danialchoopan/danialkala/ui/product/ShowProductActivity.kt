@@ -1,11 +1,15 @@
 package ir.danialchoopan.danialkala.ui.product
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import android.util.Log
 import android.view.View
+import android.widget.TextView
 import android.widget.Toast
+import androidx.viewpager.widget.ViewPager
 import ir.danialchoopan.danialkala.R
 import ir.danialchoopan.danialkala.adapter.slider.ImgSliderProductViewPagerAdapter
 import ir.danialchoopan.danialkala.adapter.slider.ImgSliderProductViewPagerAdapterForProducts
@@ -15,8 +19,10 @@ import ir.danialchoopan.danialkala.data.api.volleyRequestes.auth.AuthUserVolleyR
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.cart.CartVolleyRequest
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.favoriteProduct.FavoriteProductVolleyRequest
 import ir.danialchoopan.danialkala.data.api.volleyRequestes.product.ShowSingleProductVolleyRequest
+import ir.danialchoopan.danialkala.data.model.requests.home.Home_slider
 import ir.danialchoopan.danialkala.data.model.requests.home.New_products
 import ir.danialchoopan.danialkala.data.model.requests.showCategory.Products
+import ir.danialchoopan.danialkala.data.model.requests.singleProduct.Productphoto
 import ir.danialchoopan.danialkala.dialog.LoadingProcessDialog
 import ir.danialchoopan.danialkala.ui.cart.UserCartActivity
 import ir.danialchoopan.danialkala.ui.product.comment.ProductCommentActivity
@@ -27,6 +33,8 @@ import kotlinx.android.synthetic.main.activity_show_product.*
 
 class ShowProductActivity : AppCompatActivity() {
     lateinit var userSharePreferences: UserSharePreferences
+    var count_slider = 0
+    var sliderImgUrls = emptyList<Productphoto>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_show_product)
@@ -108,6 +116,8 @@ class ShowProductActivity : AppCompatActivity() {
                         this@ShowProductActivity,
                         productItem.productphotos
                     )
+                sliderImgUrls = productItem.productphotos
+                dots_slider(0)
                 show_product_slider_img_product.adapter = productImgSliderAdapter
 
                 //set product name
@@ -199,6 +209,44 @@ class ShowProductActivity : AppCompatActivity() {
                 //finish
                 finish()
             }
+        }
+
+
+        show_product_slider_img_product.setOnPageChangeListener(object :
+            ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(
+                position: Int,
+                positionOffset: Float,
+                positionOffsetPixels: Int
+            ) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                dots_slider(position)
+                count_slider = position
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+
+        })
+
+    }
+
+    private fun dots_slider(position: Int) {
+        linear_dot_slider_product.removeAllViews()
+        val textViews_dot = arrayOfNulls<TextView>(sliderImgUrls.size)
+        for (i in 0 until sliderImgUrls.size) {
+            textViews_dot[i] = TextView(this@ShowProductActivity)
+            textViews_dot[i]!!.text = Html.fromHtml("&#8226")
+            textViews_dot[i]!!.textSize = 32f
+            textViews_dot[i]!!.setTextColor(Color.rgb(62, 62, 62))
+            linear_dot_slider_product.addView(textViews_dot[i])
+        }
+        if (sliderImgUrls.size > 0) {
+            textViews_dot[position]!!.setTextColor(resources.getColor(R.color.white))
         }
     }
 

@@ -40,6 +40,7 @@ class SearchProductRecyclerViewAdapter(private val m_context: Context) :
             FormatNumbers.formatPrice(productItem.price) + " تومان "
 
         Picasso.get().load(EndPoints.storageImg + productItem.thumbnail)
+            .placeholder(R.drawable.pholder)
             .into(holder.view.row_item_search_product_img)
 
         //go to product show

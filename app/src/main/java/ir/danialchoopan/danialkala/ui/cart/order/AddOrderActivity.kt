@@ -97,12 +97,12 @@ class AddOrderActivity : AppCompatActivity() {
         }
 
         order_open_address.setOnClickListener {
-            if (amount == 0) {
+//            if (amount == 0) {
                 Intent(this@AddOrderActivity, UserAddressIndexActivity::class.java).also { intent ->
                     startActivity(intent)
                     finish()
                 }
-            }
+//            }
         }
 
     }

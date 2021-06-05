@@ -32,6 +32,7 @@ class RecyclerViewCategoryProductHome(private val m_context: Context) :
         holder.view.row_lblCategoryName.text = productCategoryItem.name
         //load img
         Picasso.get().load(EndPoints.storage + productCategoryItem.category_photo)
+            .placeholder(R.drawable.pholder)
             .into(holder.view.row_imgCategory)
 
         holder.view.setOnClickListener {

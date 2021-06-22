@@ -6,8 +6,8 @@ This is a simple e-commer application
 ### setup
 
 first download and install server side application from [here](https://github.com/danialchoopan/apiDanialKala)
-</br> Room support prepopulate database in version 2.2.0
-next create a kotlin object file in data\api\ApiDomain.kt 
+</br>
+create a kotlin object file in data\api\ApiDomain.kt 
 ```kotlin
 object ApiDomain {
     val domain = "{api base url}"
